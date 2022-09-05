@@ -11,11 +11,9 @@ import ReactMarkdown from 'markdown-to-jsx';
 import React from 'react';
 import {connect} from 'react-redux';
 import {REACT_MD_OVERRIDES} from './util';
-import preval from 'preval.macro';
 import List from '@mui/material/List';
 
 function LandingPage(props) {
-  const buildDate = preval`module.exports = new Date().toDateString()`;
   return (
     <Paper elevation={0}>
       <Typography variant="h5">
@@ -98,9 +96,6 @@ function LandingPage(props) {
           Version: {process.env.REACT_APP_VERSION}
         </Typography>
       )}
-      <Typography variant="caption" display="block">
-        {buildDate}
-      </Typography>
     </Paper>
   );
 }
