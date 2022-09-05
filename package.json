@@ -9,7 +9,6 @@
     "@mui/lab": "^5.0.0-alpha.91",
     "@mui/material": "^5.9.1",
     "@mui/styles": "^5.9.1",
-    "@okta/okta-auth-js": "^6.7.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^14.2.6",

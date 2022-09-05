@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/test_cirro.iml" filepath="$PROJECT_DIR$/.idea/test_cirro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Spatial-Trans-Visual-Tool.iml" filepath="$PROJECT_DIR$/.idea/Spatial-Trans-Visual-Tool.iml" />
     </modules>
   </component>
 </project>

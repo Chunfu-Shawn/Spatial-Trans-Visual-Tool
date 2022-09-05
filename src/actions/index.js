@@ -32,7 +32,7 @@ import {
   updateTraceColors,
 } from '../util';
 import {updateJob} from '../DotPlotJobResultsPanel';
-import {NoAuth} from '../NoAuth';
+//import {NoAuth} from '../NoAuth';
 
 export const DEFAULT_POINT_SIZE = 1;
 export const DEFAULT_MARKER_OPACITY = 1;
@@ -122,7 +122,6 @@ export const SET_DIALOG = 'SET_DIALOG';
 
 export const OPEN_DATASET_DIALOG = 'OPEN_DATASET_DIALOG';
 export const EDIT_DATASET_DIALOG = 'EDIT_DATASET_DIALOG';
-export const IMPORT_DATASET_DIALOG = 'IMPORT_DATASET_DIALOG';
 export const SAVE_DATASET_FILTER_DIALOG = 'SAVE_DATASET_FILTER_DIALOG';
 export const SAVE_FEATURE_SET_DIALOG = 'SAVE_FEATURE_SET_DIALOG';
 export const HELP_DIALOG = 'HELP_DIALOG';
@@ -146,7 +145,7 @@ export const SET_LOADING_APP = 'LOADING_APP';
 
 export const SET_JOB_RESULTS = 'SET_JOB_RESULTS';
 export const SET_JOB_RESULT = 'SET_JOB_RESULT';
-let auth = new NoAuth();
+//let auth = new NoAuth();
 
 export function getEmbeddingKey(embedding, includeDensity = true) {
   let key = embedding.name;
@@ -1199,10 +1198,6 @@ function _loadSavedView() {
   };
 }
 
-export function getIdToken() {
-  return auth.getIdToken();
-}
-
 export function saveDataset(payload) {
   return function (dispatch, getState) {
     let existingDataset = payload.dataset;
@@ -1502,10 +1497,6 @@ function setSelectedDistributionData(payload) {
   return {type: SET_SELECTED_DISTRIBUTION_DATA, payload: payload};
 }
 
-function _setEmail(payload) {
-  return {type: SET_EMAIL, payload: payload};
-}
-
 export function setSearchTokens(tokens, updateActiveFeature = true) {
   return function (dispatch, getState) {
     dispatch({type: SET_SEARCH_TOKENS, payload: tokens});
@@ -1534,10 +1525,6 @@ export function setSelectedEmbedding(payload) {
 
 export function setSavedDatasetState(payload) {
   return {type: SET_SAVED_DATASET_STATE, payload: payload};
-}
-
-function setDatasetFilters(payload) {
-  return {type: SET_DATASET_FILTERS, payload: payload};
 }
 
 function setDatasetViews(payload) {

@@ -12,9 +12,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import {connect} from 'react-redux';
 import {
   DELETE_DATASET_DIALOG,
-  EDIT_DATASET_DIALOG,
   HELP_DIALOG,
-  IMPORT_DATASET_DIALOG,
   SAVE_DATASET_FILTER_DIALOG,
   SAVE_FEATURE_SET_DIALOG,
   setDialog,
@@ -26,7 +24,6 @@ import CompositionPlots from './CompositionPlots';
 import DeleteDatasetDialog from './DeleteDatasetDialog';
 import DistributionPlots from './DistributionPlots';
 import DraggableDivider from './DraggableDivider';
-import EditNewDatasetDialog from './EditNewDatasetDialog';
 import EmbeddingChart from './EmbeddingChart';
 import GalleryCharts from './GalleryCharts';
 import HelpDialog from './HelpDialog';
@@ -70,9 +67,6 @@ function App(props) {
   const footerBackground = theme.palette.background.paper;
   return (
     <Box sx={{display: 'flex', backgroundColor: footerBackground}}>
-      {(dialog === EDIT_DATASET_DIALOG || dialog === IMPORT_DATASET_DIALOG) && (
-        <EditNewDatasetDialog />
-      )}
       {dialog === DELETE_DATASET_DIALOG && <DeleteDatasetDialog />}
       {dialog === SAVE_DATASET_FILTER_DIALOG && <SaveDatasetFilterDialog />}
       {dialog === HELP_DIALOG && <HelpDialog />}

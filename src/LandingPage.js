@@ -24,6 +24,13 @@ function LandingPage(props) {
       <Divider />
       <Typography variant="h6">Links</Typography>
       <List dense>
+          <ListItemButton
+              component="a"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="/help/manual/datasets"
+          ><ListItemText primary={'Help - Manual'}></ListItemText>
+          </ListItemButton>
         <ListItemButton
           component="a"
           target="_blank"
