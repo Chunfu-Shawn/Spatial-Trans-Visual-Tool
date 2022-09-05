@@ -961,10 +961,6 @@ export function setMarkerSize(payload) {
   return {type: SET_MARKER_SIZE, payload: payload};
 }
 
-export function setUser(payload) {
-  return {type: SET_USER, payload: payload};
-}
-
 export function setServerInfo(payload) {
   return {type: SET_SERVER_INFO, payload: payload};
 }
@@ -974,7 +970,8 @@ function getDefaultDatasetView(dataset) {
   let selectedEmbedding = null;
   let obsCat = null;
   if (embeddingNames.length > 0) {
-    let embeddingPriorities = ['tissue_hires', 'fle', 'umap', 'tsne'];
+    // default embedding view priorities
+    let embeddingPriorities = ['spatial','tissue_hires', 'fle', 'umap', 'tsne'];
     let embeddingName = null;
     for (
       let priorityIndex = 0;
@@ -1013,6 +1010,7 @@ function getDefaultDatasetView(dataset) {
     }
   }
   if (obsCat == null) {
+    // default metadata view priorities
     let catPriorities = [
       'anno',
       'cell_type',

@@ -208,7 +208,7 @@ function dataset(state = null, action) {
   switch (action.type) {
     case SET_DATASET:
       document.title =
-        action.payload == null ? 'Cirro' : action.payload.name + ' - Cirro';
+        action.payload == null ? 'Visualization' : action.payload.name + ' - Visualization';
       if (action.payload) {
         let features = action.payload.var;
         if (features) {
