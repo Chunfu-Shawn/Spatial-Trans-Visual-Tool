@@ -146,7 +146,7 @@ function EmbeddingChart(props) {
           overflow: 'hidden',
           // whiteSpace: 'nowrap',
           textOverflow: 'ellipsis',
-          maxWidth: 300,
+          maxWidth: 200,
           right: 8,
           top: 0,
           zIndex: 1000,

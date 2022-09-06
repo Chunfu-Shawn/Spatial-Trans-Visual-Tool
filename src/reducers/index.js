@@ -207,8 +207,6 @@ function chartOptions(state = DEFAULT_CHART_OPTIONS, action) {
 function dataset(state = null, action) {
   switch (action.type) {
     case SET_DATASET:
-      document.title =
-        action.payload == null ? 'Visualization' : action.payload.name + ' - Visualization';
       if (action.payload) {
         let features = action.payload.var;
         if (features) {
@@ -244,7 +242,6 @@ function dataset(state = null, action) {
     case UPDATE_DATASET:
       if (action.payload.id === state.id) {
         // update name, description, url
-        document.title = action.payload.name + ' - Cirro';
         return Object.assign(state, action.payload);
       }
       return state;

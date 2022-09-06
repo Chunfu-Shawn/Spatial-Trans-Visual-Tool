@@ -31,13 +31,13 @@
     "memoize-one": "^6.0.0",
     "mixpanel-browser": "^2.45.0",
     "natsort": "^2.0.3",
+    "next": "^12.2.5",
     "openseadragon": "^2.4.2",
     "preval.macro": "^5.0.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.2",
-    "react-scripts": "^5.0.1",
     "react-sortable-hoc": "^2.0.0",
     "react-window": "^1.8.7",
     "redux": "^4.2.0",
@@ -48,10 +48,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "eslintConfig": {
     "extends": [
@@ -72,10 +72,10 @@
     ]
   },
   "devDependencies": {
-  "gm": "^1.23.1",
-  "jest-puppeteer": "^6.1.1",
-  "prettier": "^2.7.1",
-  "preval.macro": "^5.0.0",
-  "puppeteer": "^15.4.0"
-}
+    "gm": "^1.23.1",
+    "jest-puppeteer": "^6.1.1",
+    "prettier": "^2.7.1",
+    "preval.macro": "^5.0.0",
+    "puppeteer": "^15.4.0"
+  }
 }

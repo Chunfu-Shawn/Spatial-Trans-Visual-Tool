@@ -11,7 +11,7 @@ function AppWrapper(props) {
   const theme = chartOptions.darkMode ? darkTheme : lightTheme;
 
   return (
-    <StyledEngineProvider injectFirst>
+    <StyledEngineProvider>
       <ThemeProvider theme={theme}>
         <App />
       </ThemeProvider>

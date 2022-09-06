@@ -86,7 +86,7 @@ function AppHeader(props) {
   return (
     <Box sx={{display: 'flex'}}>
       <AppBar
-        position="fixed"
+        position="absolute"
         color={'default'}
         sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,

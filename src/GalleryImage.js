@@ -219,8 +219,8 @@ export default function GalleryImage(props) {
       <div
         style={{
           position: 'relative',
-          width: props.chartSize,
-          height: props.chartSize,
+          width: props.chartSize * 0.6,
+          height: props.chartSize * 0.6,
           cursor: 'pointer',
         }}
       >
@@ -259,12 +259,10 @@ export default function GalleryImage(props) {
             <img
               alt=""
               src={url}
-              width={props.chartSize * devicePixelRatio}
-              height={props.chartSize * devicePixelRatio}
               onClick={onSelect}
               style={{
-                width: props.chartSize,
-                height: props.chartSize,
+                width: props.chartSize * 0.6,
+                height: props.chartSize * 0.6,
               }}
             />
           </div>

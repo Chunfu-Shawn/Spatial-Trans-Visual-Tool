@@ -678,8 +678,9 @@ function ScatterChartThree(props) {
         data-testid="scatter-chart-three"
         style={{
           display: 'inline-block',
-          width: chartSize.width,
-          height: chartSize.height,
+          // change canvas size
+          width: 810,
+          height: 600,
         }}
         ref={containerElementRef}
       >

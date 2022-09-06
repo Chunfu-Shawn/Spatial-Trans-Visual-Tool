@@ -81,6 +81,7 @@ function App(props) {
           '& .MuiDrawer-paper': {
             width: drawerOpen && dataset != null ? drawerWidth : null,
             boxSizing: 'border-box',
+              height:"auto",
           },
         }}
       >
@@ -150,7 +151,8 @@ function App(props) {
       </Box>
 
       {loading && (
-        <Dialog aria-labelledby="loading-dialog-title" open={true}>
+        <Dialog aria-labelledby="loading-dialog-title" open={true}
+                container={() => document.getElementById('VisualTool')}>
           <DialogTitle id="loading-dialog-title">
             <CircularProgress size={20} /> Loading...
           </DialogTitle>
