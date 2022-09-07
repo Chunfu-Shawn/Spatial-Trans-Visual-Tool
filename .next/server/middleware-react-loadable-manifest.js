@@ -1,1 +1,0 @@
-self.__REACT_LOADABLE_MANIFEST={"index.js -> ../src/VisualTool.js":{"id":"index.js -> ../src/VisualTool.js","files":["static/chunks/src_VisualTool_js.js"]}}
