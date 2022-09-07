@@ -22,15 +22,15 @@ pip install cirrocumulus
 cirro prepare_data pbmc3k.h5ad --format jsonl
 ```
 ### Create the file datasets.json in the public directory:
-`
+```
 [
-{
-"id": "pbmc3k",
-"name": "pbmc3k",
-"url": "pbmc3k/pbmc3k.jsonl"
-}
+    {
+        "id": "pbmc3k",
+        "name": "pbmc3k",
+        "url": "pbmc3k/pbmc3k.jsonl"
+    }
 ]
-`
+```
 ### Move your dataset files to build:
 `mv pbmc3k public`
 ### Test locally:
