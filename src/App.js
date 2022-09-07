@@ -81,7 +81,7 @@ function App(props) {
           '& .MuiDrawer-paper': {
             width: drawerOpen && dataset != null ? drawerWidth : null,
             boxSizing: 'border-box',
-              height:"auto",
+              height:"100%",
           },
         }}
       >
@@ -95,7 +95,7 @@ function App(props) {
         sx={{
           flexGrow: 1,
           marginLeft: 1,
-          paddingBottom: 24,
+          paddingBottom: 14,
           color: color,
           backgroundColor: footerBackground,
         }}

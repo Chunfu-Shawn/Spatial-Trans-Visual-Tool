@@ -3,9 +3,9 @@
 This project refers to [Cirrocumulus](https://github.com/lilab-bcb/cirrocumulus) and was developed 
 to be used under serverless.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Next.js](https://github.com/vercel/next.js).
 
-## Quick Start
+## 1. Quick Start
 This project can represent spatial trancriptome dataset under serverless, so prepare the dataset(s) in jsonl format using
 h5ad format data and run this project.
 
@@ -16,11 +16,11 @@ h5ad format data and run this project.
 ### Install JavaScript dependencies:
 `yarn install`
 ### Prepare dataset(s) in jsonl format:
-you can use [Cirrocumulus](https://github.com/lilab-bcb/cirrocumulus) to process .h5ad data to .jsonl data
-
-`pip install cirrocumulus`</br>
-`cirro prepare_data pbmc3k.h5ad --format jsonl`
-
+you can use [Cirrocumulus](https://github.com/lilab-bcb/cirrocumulus) to process .h5ad data to .jsonl data.\
+```
+pip install cirrocumulus
+cirro prepare_data pbmc3k.h5ad --format jsonl
+```
 ### Create the file datasets.json in the public directory:
 `
 [
@@ -34,10 +34,16 @@ you can use [Cirrocumulus](https://github.com/lilab-bcb/cirrocumulus) to process
 ### Move your dataset files to build:
 `mv pbmc3k public`
 ### Test locally:
-`yarn run dev`
-
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
+`yarn run dev`\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser. The page will reload when you make changes.
 You may also see any lint errors in the console.
+
+
+## 1. Customization API
+### Module Size
+| Attributions | Type      | Default | Description                  |
+|--------------|-----------|------|------------------------------|
+| setCustom    | true/false | false | custom size or adaptive size |
+| width        | "number"  | 1200 | the width of this module     |
+| height       | "number" | 1000 | the height of this module    |

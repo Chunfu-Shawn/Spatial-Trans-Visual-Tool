@@ -75,11 +75,15 @@ function EmbeddingChart(props) {
 
   const [showLegend, setShowLegend] = useState(true);
 
+
+  // custom the width and height of panel
   useEffect(() => {
-    window.addEventListener('resize', handleWindowSize);
-    return () => {
-      window.removeEventListener('resize', handleWindowSize);
-    };
+    if(!primaryChartSize.custom){
+      window.addEventListener('resize', handleWindowSize(primaryChartSize));
+      return () => {
+        window.removeEventListener('resize', handleWindowSize(primaryChartSize));
+      };
+    }
   }, [handleWindowSize]);
 
   function handleToggleLegend(e) {
@@ -326,8 +330,8 @@ const mapDispatchToProps = (dispatch) => {
     handleScrollPosition: (value) => {
       dispatch(setLegendScrollPosition(value));
     },
-    handleWindowSize: () => {
-      dispatch(setWindowSize());
+    handleWindowSize: (payload) => {
+      dispatch(setWindowSize(payload));
     },
     handleEmbeddingData: (value) => {
       dispatch(setEmbeddingData(value));

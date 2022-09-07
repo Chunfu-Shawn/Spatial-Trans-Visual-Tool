@@ -142,11 +142,19 @@ function panel(
         action.type === SET_DRAWER_OPEN ? action.payload : state.drawerOpen;
 
       if (action.type === SET_WINDOW_SIZE) {
-        const windowWidth = window.innerWidth;
-        const windowHeight = window.innerHeight;
-        const width = windowWidth - (drawerOpen ? 280 : 40);
-        const height = Math.max(300, windowHeight - 370);
-        primaryChartSize = {width: width, height: height};
+        if( action.payload.setCustom !== null && action.payload.setCustom ){
+          primaryChartSize = {
+            width: action.payload.width,
+            height: action.payload.height,
+            setCustom: true
+          };
+        }else {
+          const windowWidth = window.innerWidth;
+          const windowHeight = window.innerHeight;
+          const width = windowWidth - (drawerOpen ? 280 : 40);
+          const height = Math.max(300, windowHeight - 370);
+          primaryChartSize = {width: width, height: height, setCustom: false};
+        }
       } else if (action.type === SET_DRAG_DIVIDER) {
         primaryChartSize = {
           width: primaryChartSize.width,

@@ -289,8 +289,8 @@ class MetaEmbedding extends React.PureComponent {
         <div
           style={{
             display: 'inline-block',
-            // width: this.props.chartSize.width,
-            // height: this.props.chartSize.height
+            //width: this.props.chartSize.width,
+            //height: this.props.chartSize.height
           }}
           ref={this.containerElementRef}
         ></div>

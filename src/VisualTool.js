@@ -2,42 +2,50 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import {applyMiddleware, createStore} from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import {initAuth, SET_DATASET, SET_EMAIL, SET_SERVER_INFO} from './actions';
+import {initAuth, SET_DATASET, SET_EMAIL, SET_SERVER_INFO, setChartSize, setWindowSize} from './actions';
 import rootReducer from './reducers';
 import AppWrapper from './AppWrapper';
 // import * as serviceWorker from './serviceWorker';
 import mixpanel from 'mixpanel-browser';
 
-let useMixPanel = false;
 
-const logger = (store) => (next) => (action) => {
-  if (action.type === SET_SERVER_INFO) {
-    if (action.payload.mixpanel) {
-      mixpanel.init(action.payload.mixpanel);
-      useMixPanel = true;
-    }
-  }
-  if (useMixPanel) {
-    if (action.type === SET_DATASET) {
-      mixpanel.track('Open Dataset', {
-        name: action.payload.name,
-        id: action.payload.id,
-      });
-    } else if (action.type === SET_EMAIL) {
-      mixpanel.identify(action.payload);
-    }
-  }
-  return next(action);
-};
+export function VisualTool(props) {
+    let useMixPanel = false;
+    const logger = (store) => (next) => (action) => {
+        if (action.type === SET_SERVER_INFO) {
+            if (action.payload.mixpanel) {
+                mixpanel.init(action.payload.mixpanel);
+                useMixPanel = true;
+            }
+        }
+        if (useMixPanel) {
+            if (action.type === SET_DATASET) {
+                mixpanel.track('Open Dataset', {
+                    name: action.payload.name,
+                    id: action.payload.id,
+                });
+            } else if (action.type === SET_EMAIL) {
+                mixpanel.identify(action.payload);
+            }
+        }
+        return next(action);
+    };
 
-const store = createStore(
-  rootReducer,
-  applyMiddleware(thunkMiddleware, logger)
-);
+    const store = createStore(
+        rootReducer,
+        applyMiddleware(thunkMiddleware, logger)
+    );
+    const width = props.width !== null ? props.width - 250 : "1200"
+    const height = props.height !== null ? props.height - 180 : "1000"
+    const setCustom = props.setCustom !== null ? props.setCustom : false
+    store.dispatch(initAuth());
+    store.dispatch(setWindowSize(
+        {
+            width: width,
+            height: height,
+            setCustom: setCustom
+        }));
 
-store.dispatch(initAuth());
-
-export function VisualTool() {
   return(
     <Provider store={store}>
       {/*<React.StrictMode>*/}
@@ -47,9 +55,10 @@ export function VisualTool() {
                  borderStyle: "solid",
                  borderWidth: 1,
                  borderColor: "lightgray",
-                 width: "100%",
-                 height: "800px",
-                 overflow: "scroll",
+                 // whether custom?
+                 width: setCustom ? width + 250 : "100vw",
+                 height: setCustom ? height + 180: "100vh",
+                 overflow: setCustom ? "scroll" : "visible",
                  transform:"translate3d(0, 0, 0)"
         }}>
           <AppWrapper/>
