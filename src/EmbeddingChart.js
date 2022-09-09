@@ -67,7 +67,6 @@ function EmbeddingChart(props) {
     primaryChartSize,
     searchTokens,
     selection,
-    serverInfo,
     shape,
     unselectedMarkerOpacity,
     unselectedPointSize,
@@ -214,7 +213,6 @@ function EmbeddingChart(props) {
             nObsSelected={nObsSelected}
             globalFeatureSummary={globalFeatureSummary}
             featureSummary={featureSummary}
-            serverInfo={serverInfo}
           />
         )}
       </Box>
@@ -298,7 +296,6 @@ const mapStateToProps = (state) => {
     pointSize: state.pointSize,
     primaryChartSize: state.panel.primaryChartSize,
     searchTokens: state.searchTokens,
-    serverInfo: state.serverInfo,
     shape: state.dataset.shape,
     unselectedMarkerOpacity: state.unselectedMarkerOpacity,
     unselectedPointSize: state.unselectedPointSize,

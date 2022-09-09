@@ -1,7 +1,6 @@
 import {isPlainObject, isString} from 'lodash';
 import {combineReducers} from 'redux';
 import {
-  ADD_DATASET,
   ADD_TASK,
   DEFAULT_DARK_MODE,
   DEFAULT_DISTRIBUTION_PLOT_INTERPOLATOR,
@@ -14,7 +13,6 @@ import {
   DEFAULT_SHOW_AXIS,
   DEFAULT_SHOW_FOG,
   DEFAULT_UNSELECTED_MARKER_OPACITY,
-  DELETE_DATASET,
   REMOVE_TASK,
   RESTORE_VIEW,
   SET_ACTIVE_FEATURE,
@@ -23,7 +21,6 @@ import {
   SET_CHART_SIZE,
   SET_COMBINE_DATASET_FILTERS,
   SET_DATASET,
-  SET_DATASET_CHOICES,
   SET_DATASET_FILTER,
   SET_DATASET_FILTERS,
   SET_DATASET_VIEWS,
@@ -34,14 +31,11 @@ import {
   SET_DOMAIN,
   SET_DRAG_DIVIDER,
   SET_DRAWER_OPEN,
-  SET_EMAIL,
   SET_EMBEDDING_DATA,
   SET_EMBEDDING_LABELS,
   SET_FEATURE_SUMMARY,
   SET_GLOBAL_FEATURE_SUMMARY,
   SET_INTERPOLATOR,
-  SET_JOB_RESULT,
-  SET_JOB_RESULTS,
   SET_LEGEND_SCROLL_POSITION,
   SET_LOADING_APP,
   SET_MARKER_OPACITY,
@@ -54,7 +48,6 @@ import {
   SET_SELECTED_EMBEDDING,
   SET_SELECTED_LAYERS,
   SET_SELECTION,
-  SET_SERVER_INFO,
   SET_TAB,
   SET_UNSELECTED_MARKER_OPACITY,
   SET_UNSELECTED_POINT_SIZE,
@@ -258,45 +251,6 @@ function dataset(state = null, action) {
   }
 }
 
-function datasetChoices(state = [], action) {
-  switch (action.type) {
-    case SET_DATASET_CHOICES:
-      action.payload.sort(NATSORT);
-      return action.payload;
-    case SET_EMAIL:
-      if (action.payload == null) {
-        return [];
-      }
-      return state;
-    case ADD_DATASET:
-      state.push(action.payload);
-      state.sort(NATSORT);
-      return state.slice();
-    case UPDATE_DATASET:
-    case DELETE_DATASET:
-      let index = -1;
-      for (let i = 0; i < state.length; i++) {
-        if (state[i].id === action.payload.id) {
-          index = i;
-          break;
-        }
-      }
-      if (index !== -1) {
-        if (action.type === UPDATE_DATASET) {
-          state[index] = action.payload;
-          state.sort(NATSORT);
-        } else {
-          state.splice(index, 1);
-        }
-
-        return state.slice();
-      }
-      return state;
-    default:
-      return state;
-  }
-}
-
 // set the selected embeddings, each embedding has name (str) e.g X_umap, dimensions (int), mode (str)
 function embeddings(state = [], action) {
   switch (action.type) {
@@ -427,15 +381,6 @@ function message(state = null, action) {
   }
 }
 
-function email(state = null, action) {
-  switch (action.type) {
-    case SET_EMAIL:
-      return action.payload;
-    default:
-      return state;
-  }
-}
-
 function user(state = {}, action) {
   switch (action.type) {
     case SET_USER:
@@ -491,38 +436,6 @@ function globalFeatureSummary(state = {}, action) {
       return state;
     case SET_DATASET:
       return {};
-    default:
-      return state;
-  }
-}
-
-function serverInfo(state = {}, action) {
-  switch (action.type) {
-    case SET_SERVER_INFO:
-      if (action.payload.ontology && action.payload.ontology.cellTypes) {
-        action.payload.ontology.cellTypes.forEach(
-          (item) => (item.text = item.name)
-        );
-        action.payload.ontology.cellTypes.sort((item1, item2) =>
-          NATSORT(item1.text, item2.text)
-        );
-      }
-      if (action.payload.datasetSelectorColumns == null) {
-        action.payload.datasetSelectorColumns = [
-          {field: 'name', label: 'Name', visible: true},
-          {
-            field: 'species',
-            label: 'Species',
-            visible: true,
-          },
-          {
-            field: 'title',
-            label: 'Title',
-            visible: true,
-          },
-        ];
-      }
-      return action.payload;
     default:
       return state;
   }
@@ -608,28 +521,6 @@ function distributionPlotOptions(state = DEFAULT_DIST_PLOT_OPTIONS, action) {
       return action.payload.distributionPlotOptions != null
         ? action.payload.distributionPlotOptions
         : state;
-    default:
-      return state;
-  }
-}
-
-function jobResultId(state = null, action) {
-  switch (action.type) {
-    case SET_DATASET:
-      return null;
-    case SET_JOB_RESULT:
-      return action.payload;
-    default:
-      return state;
-  }
-}
-
-function jobResults(state = [], action) {
-  switch (action.type) {
-    case SET_DATASET:
-      return [];
-    case SET_JOB_RESULTS:
-      return action.payload;
     default:
       return state;
   }
@@ -924,7 +815,6 @@ export default combineReducers({
   chartSize,
   combineDatasetFilters,
   dataset,
-  datasetChoices,
   datasetFilter,
   datasetFilters,
   datasetViews,
@@ -932,15 +822,12 @@ export default combineReducers({
   distributionData,
   distributionPlotOptions,
   distributionPlotInterpolator,
-  email,
   embeddingData,
   embeddingLabels,
   embeddings,
   featureSummary,
   globalFeatureSummary,
   interpolator,
-  jobResultId,
-  jobResults,
   legendScrollPosition,
   tasks,
   layers,
@@ -954,7 +841,6 @@ export default combineReducers({
   searchTokens,
   selectedDistributionData,
   selection,
-  serverInfo,
   tab,
   unselectedMarkerOpacity,
   unselectedPointSize,

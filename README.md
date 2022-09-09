@@ -40,10 +40,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser. 
 You may also see any lint errors in the console.
 
 
-## 1. Customization API
+## 2. Customization API
 ### Module Size
 | Attributions | Type      | Default | Description                  |
-|--------------|-----------|------|------------------------------|
-| setCustom    | true/false | false | custom size or adaptive size |
-| width        | "number"  | 1200 | the width of this module     |
-| height       | "number" | 1000 | the height of this module    |
+|--------------|-----------|---------|------------------------------|
+| setCustom    | true/false | false   | custom size or adaptive size |
+| width        | "number"  | 1100    | the width of this module     |
+| height       | "number" | 800     | the height of this module    |

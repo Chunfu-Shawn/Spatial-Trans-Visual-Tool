@@ -1,15 +1,13 @@
 import {scaleOrdinal} from 'd3-scale';
 import {schemeCategory10, schemePaired} from 'd3-scale-chromatic';
 import {saveAs} from 'file-saver';
-import {find, findIndex, groupBy, indexOf, isArray, isString} from 'lodash';
+import {find, findIndex, groupBy, indexOf, isArray} from 'lodash';
 import OpenSeadragon from 'openseadragon';
 import isPlainObject from 'react-redux/lib/utils/isPlainObject';
 import CustomError from '../CustomError';
 import {getPassingFilterIndices} from '../dataset_filter';
 import {DirectAccessDataset} from '../DirectAccessDataset';
 import {createCategoryToStats} from '../MetaEmbedding';
-
-import {StaticServerApi} from '../StaticServerApi';
 
 import {getPositions} from '../ThreeUtil';
 import {
@@ -24,15 +22,12 @@ import {
   getInterpolator,
   indexSort,
   randomSeq,
-  SERVER_CAPABILITY_RENAME_CATEGORIES,
   summarizeDensity,
   TRACE_TYPE_IMAGE,
   TRACE_TYPE_META_IMAGE,
   TRACE_TYPE_SCATTER,
   updateTraceColors,
 } from '../util';
-import {updateJob} from '../DotPlotJobResultsPanel';
-//import {NoAuth} from '../NoAuth';
 
 export const DEFAULT_POINT_SIZE = 1;
 export const DEFAULT_MARKER_OPACITY = 1;
@@ -87,17 +82,13 @@ export const SET_ACTIVE_FEATURE = 'SET_ACTIVE_FEATURE';
 export const SET_CHART_SIZE = 'SET_CHART_SIZE';
 export const SET_SERVER_INFO = 'SET_SERVER_INFO';
 export const SET_DATASET_FILTER = 'SET_DATASET_FILTER';
-export const ADD_DATASET = 'ADD_DATASET';
-export const DELETE_DATASET = 'DELETE_DATASET';
 export const UPDATE_DATASET = 'UPDATE_DATASET';
 export const SET_GLOBAL_FEATURE_SUMMARY = 'SET_GLOBAL_FEATURE_SUMMARY';
-export const SET_SAVED_DATASET_STATE = 'SET_SAVED_DATASET_STATE';
 
 export const SET_DOMAIN = 'SET_DOMAIN';
 export const UPDATE_CATEGORICAL_COLOR = 'UPDATE_CATEGORICAL_COLOR';
 export const SET_CATEGORICAL_NAME = 'SET_CATEGORICAL_NAME';
 export const UPDATE_CATEGORICAL_NAME = 'UPDATE_CATEGORICAL_NAME';
-export const SET_MARKER_SIZE = 'SET_MARKER_SIZE';
 export const SET_MARKER_OPACITY = 'SET_MARKER_OPACITY';
 
 export const SET_UNSELECTED_MARKER_OPACITY = 'SET_UNSELECTED_MARKER_OPACITY';
@@ -128,7 +119,6 @@ export const HELP_DIALOG = 'HELP_DIALOG';
 export const DELETE_DATASET_DIALOG = 'DELETE_DATASET_DIALOG';
 
 export const SET_DATASET_CHOICES = 'SET_DATASET_CHOICES';
-export const RESTORE_VIEW = 'RESTORE_VIEW';
 
 export const SET_DISTRIBUTION_DATA = 'SET_DISTRIBUTION_DATA';
 export const SET_SELECTED_DISTRIBUTION_DATA = 'SET_SELECTED_DISTRIBUTION_DATA';
@@ -159,7 +149,7 @@ export function getTraceKey(trace) {
   return trace.name + '_' + getEmbeddingKey(trace.embedding);
 }
 
-export function initAuth() {
+export function initAuth(dataset) {
   return function (dispatch, getState) {
     dispatch(_setLoadingApp({loading: true, progress: 0}));
     const startTime = new Date().getTime();
@@ -177,163 +167,20 @@ export function initAuth() {
     }
 
     window.setTimeout(loadingAppProgress, 500);
-    const serverInfo = {capabilities: new Set(), auth: {clientId: ''}};
-    serverInfo.api = new StaticServerApi();
-    dispatch(setServerInfo(serverInfo));
     dispatch(_setLoadingApp({loading: false}));
-    dispatch(listDatasets()).then(() => {
-      dispatch(_loadSavedView());
-    });
-    return Promise.resolve();
-  };
-}
-
-export function openLink(id, loadDataset = false) {
-  return function (dispatch, getState) {
-    const task = {name: 'Open view'};
+    const task = {name: 'Load Dataset'};
     dispatch(addTask(task));
-    getState()
-      .serverInfo.api.getViewPromise(id)
-      .then((result) => {
-        const savedView = isString(result.value)
-          ? JSON.parse(result.value)
-          : result.value;
-        savedView.dataset = result.dataset_id;
-        dispatch(restoreSavedView(savedView));
-      })
-      .finally(() => {
-        dispatch(removeTask(task));
-      })
-      .catch((err) => {
-        handleError(
+    try{
+      dispatch(setDataset(dataset))
+    }catch (err){
+      handleError(
           dispatch,
           err,
-          'Unable to retrieve link. Please try again.'
-        );
-      });
-  };
-}
-
-/**
- *
- * @param payload Object with name, notes
- * @returns {(function(*=, *): void)|*}
- */
-export function saveLink(payload) {
-  return function (dispatch, getState) {
-    const state = getState();
-    const value = getDatasetStateJson(state);
-    payload.value = value;
-    delete value['dataset'];
-    payload = Object.assign({ds_id: state.dataset.id}, payload);
-    const task = {name: 'Save link'};
-    dispatch(addTask(task));
-    getState()
-      .serverInfo.api.upsertViewPromise(payload, false)
-      .then((result) => {
-        payload = Object.assign(result, payload);
-        const array = getState().datasetViews;
-        array.push(payload);
-        dispatch(setDatasetViews(array.slice()));
-        dispatch(setMessage('Link saved'));
-      })
-      .finally(() => {
-        dispatch(removeTask(task));
-        dispatch(setDialog(null));
-      })
-      .catch((err) => {
-        handleError(dispatch, err, 'Unable to save link. Please try again.');
-      });
-  };
-}
-
-export function deleteLink(id) {
-  return function (dispatch, getState) {
-    const task = {name: 'Delete link'};
-    dispatch(addTask(task));
-    getState()
-      .serverInfo.api.deleteViewPromise(id, getState().dataset.id)
-      .then(() => {
-        const array = getState().datasetViews;
-        const index = findIndex(array, (item) => item.id === id);
-        if (index !== -1) {
-          array.splice(index, 1);
-          dispatch(setDatasetViews(array.slice()));
-          dispatch(setMessage('Link deleted'));
-        }
-      })
-      .finally(() => {
-        dispatch(removeTask(task));
-        dispatch(setDialog(null));
-      })
-      .catch((err) => {
-        handleError(dispatch, err, 'Unable to delete link. Please try again.');
-      });
-  };
-}
-
-export function submitJob(jobData) {
-  return function (dispatch, getState) {
-    let jobId;
-    let timeout = 5 * 1000; // TODO
-    function getJobStatus() {
-      getState()
-        .dataset.api.getJobStatus(jobId)
-        .then((result) => {
-          const jobResult = find(
-            getState().jobResults,
-            (item) => item.id === jobId
-          );
-          if (jobResult == null) {
-            // job was deleted
-            return;
-          }
-          const statusUpdated = jobResult.status !== result.status;
-          jobResult.status = result.status;
-          let fetchJobStatus = true;
-          if (result.status === 'complete') {
-            dispatch(setMessage(jobData.name + ': complete'));
-            dispatch(setJobResults(getState().jobResults.slice()));
-            fetchJobStatus = false;
-          } else if (result.status === 'error') {
-            handleError(
-              dispatch,
-              new CustomError('Unable to complete job. Please try again.')
-            );
-            fetchJobStatus = false;
-          } else if (statusUpdated) {
-            // force repaint
-            dispatch(setMessage(jobData.name + ': ' + result.status));
-            dispatch(setJobResults(getState().jobResults.slice()));
-          }
-          if (fetchJobStatus) {
-            window.setTimeout(getJobStatus, timeout);
-          }
-        })
-        .catch((err) => {
-          handleError(dispatch, err, 'Unable to get job. Please try again.');
-        });
+          'Unable to retrieve datasets. Please try again.'
+      );
     }
-
-    jobData.id = getState().dataset.id;
-    if (jobData.params.filter == null) {
-      jobData.params.filter = getFilterJson(getState());
-    }
-    getState()
-      .serverInfo.api.submitJob(jobData)
-      .then((result) => {
-        dispatch(setMessage('Job submitted'));
-        jobId = result.id;
-        jobData.email = getState().email;
-        jobData.id = jobId;
-        getState().jobResults.push(jobData);
-        dispatch(setJobResults(getState().jobResults.slice()));
-        window.setTimeout(getJobStatus, timeout);
-      })
-      .finally(() => {})
-      .catch((err) => {
-        handleError(dispatch, err, 'Unable to submit job. Please try again.');
-      });
+    dispatch(removeTask(task))
+    return Promise.resolve();
   };
 }
 
@@ -341,67 +188,26 @@ export function deleteFeatureSet(id) {
   return function (dispatch, getState) {
     const task = {name: 'Delete set'};
     dispatch(addTask(task));
-    getState()
-      .serverInfo.api.deleteFeatureSet(id, getState().dataset.id)
-      .then((result) => {
-        let markers = getState().markers;
-        let found = false;
-        for (let i = 0; i < markers.length; i++) {
-          if (markers[i].id === id) {
-            markers.splice(i, 1);
-            found = true;
-            break;
-          }
+    try {
+      let markers = getState().markers;
+      let found = false;
+      for (let i = 0; i < markers.length; i++) {
+        if (markers[i].id === id) {
+          markers.splice(i, 1);
+          found = true;
+          break;
         }
-        if (!found) {
-          console.log('Unable to find feature set id ' + id);
-        }
-        dispatch(setMarkers(markers.slice()));
-        dispatch(setMessage('Set deleted'));
-      })
-      .finally(() => {
-        dispatch(removeTask(task));
-      })
-      .catch((err) => {
-        handleError(dispatch, err, 'Unable to delete set. Please try again.');
-      });
-  };
-}
-
-export function saveFeatureSet(payload) {
-  return function (dispatch, getState) {
-    const state = getState();
-    const features = state.searchTokens
-      .filter((item) => item.type === FEATURE_TYPE.X)
-      .map((item) => item.id);
-    const requestBody = {
-      ds_id: state.dataset.id,
-      name: payload.name,
-      features: features,
-      category: payload.category,
+      }
+      if (!found) {
+        console.log('Unable to find feature set id ' + id);
+      }
+      dispatch(setMarkers(markers.slice()));
+      dispatch(setMessage('Set deleted'));
+    }catch(err) {
+      handleError(dispatch, err, 'Unable to delete set. Please try again.');
+    }finally {
+      dispatch(removeTask(task));
     };
-    const task = {name: 'Save feature set'};
-    dispatch(addTask(task));
-    getState()
-      .serverInfo.api.upsertFeatureSet(requestBody, false)
-      .then((result) => {
-        let markers = getState().markers;
-        markers.push({
-          category: payload.category,
-          name: payload.name,
-          features: features,
-          id: result.id,
-        });
-        dispatch(setMarkers(markers.slice()));
-        dispatch(setMessage('Set saved'));
-      })
-      .finally(() => {
-        dispatch(removeTask(task));
-        dispatch(setDialog(null));
-      })
-      .catch((err) => {
-        handleError(dispatch, err, 'Unable to save set. Please try again.');
-      });
   };
 }
 
@@ -564,29 +370,6 @@ export function downloadSelectedIds() {
           type: 'text/plain;charset=utf-8',
         });
         saveAs(blob, 'selection.txt');
-      })
-      .finally(() => {
-        dispatch(removeTask(task));
-      })
-      .catch((err) => {
-        handleError(dispatch, err);
-      });
-  };
-}
-
-export function exportDatasetFilters() {
-  return function (dispatch, getState) {
-    const task = {name: 'Export Filters'};
-    dispatch(addTask(task));
-    getState()
-      .serverInfo.api.exportDatasetFiltersPromise(getState().dataset.id)
-      .then((result) => {
-        if (result == null) {
-          handleError(dispatch, 'Unable to export filters');
-          return;
-        }
-        const blob = new Blob([result], {type: 'text/plain;charset=utf-8'});
-        saveAs(blob, 'filters.csv');
       })
       .finally(() => {
         dispatch(removeTask(task));
@@ -907,46 +690,16 @@ export function _handleColorChange(payload) {
 
 export function handleColorChange(payload) {
   return function (dispatch, getState) {
-    const value = Object.assign({id: getState().dataset.id}, payload);
-    if (
-      getState().serverInfo.capabilities.has(
-        SERVER_CAPABILITY_RENAME_CATEGORIES
-      )
-    ) {
-      getState()
-        .serverInfo.api.setCategoryNamePromise(value)
-        .then(() => {
-          dispatch(_handleColorChange(payload));
-        });
-    } else {
-      // save, but do not persist
-      dispatch(_handleColorChange(payload));
-    }
+    // save, but do not persist
+    dispatch(_handleColorChange(payload));
   };
 }
 
 export function handleCategoricalNameChange(payload) {
   return function (dispatch, getState) {
-    const value = Object.assign({id: getState().dataset.id}, payload);
-    if (
-      getState().serverInfo.capabilities.has(
-        SERVER_CAPABILITY_RENAME_CATEGORIES
-      )
-    ) {
-      getState()
-        .serverInfo.api.setCategoryNamePromise(value)
-        .then(() => {
-          dispatch(handleUpdateCategoricalName(payload));
-        });
-    } else {
-      // save, but do not persist
-      dispatch(handleUpdateCategoricalName(payload));
-    }
+    // save, but do not persist
+    dispatch(handleUpdateCategoricalName(payload));
   };
-}
-
-export function restoreView(payload) {
-  return {type: RESTORE_VIEW, payload: payload};
 }
 
 export function setPointSize(payload) {
@@ -955,14 +708,6 @@ export function setPointSize(payload) {
 
 export function setUnselectedPointSize(payload) {
   return {type: SET_UNSELECTED_POINT_SIZE, payload: payload};
-}
-
-export function setMarkerSize(payload) {
-  return {type: SET_MARKER_SIZE, payload: payload};
-}
-
-export function setServerInfo(payload) {
-  return {type: SET_SERVER_INFO, payload: payload};
 }
 
 function getDefaultDatasetView(dataset) {
@@ -1054,258 +799,6 @@ function loadDefaultDatasetView() {
   };
 }
 
-function loadDefaultDataset() {
-  return function (dispatch, getState) {
-    if (getState().dataset == null && getState().datasetChoices.length === 1) {
-      dispatch(setDataset(getState().datasetChoices[0].id));
-    }
-  };
-}
-
-function restoreSavedView(savedView) {
-  return function (dispatch, getState) {
-    if (savedView.interpolator != null) {
-      for (const key in savedView.interpolator) {
-        savedView.interpolator[key].value = getInterpolator(
-          savedView.interpolator[key].name
-        );
-      }
-    }
-
-    if (savedView.datasetFilter == null) {
-      savedView.datasetFilter = {};
-    } else {
-      for (let key in savedView.datasetFilter) {
-        let value = savedView.datasetFilter[key];
-        if (value.operation) {
-          value.uiValue = value.value;
-        }
-      }
-    }
-    const task = {name: 'Restore view'};
-    dispatch(addTask(task));
-    let datasetPromise;
-    if (savedView.dataset != null) {
-      datasetPromise = dispatch(setDataset(savedView.dataset, false, false));
-    } else {
-      datasetPromise = Promise.resolve();
-    }
-    datasetPromise
-      .then(() => {
-        let dataset = getState().dataset;
-        if (savedView.embeddings && savedView.embeddings.length > 0) {
-          let names = dataset.embeddings.map((e) => getEmbeddingKey(e));
-          let embeddings = [];
-          savedView.embeddings.forEach((embedding) => {
-            let index = names.indexOf(getEmbeddingKey(embedding));
-            if (index !== -1) {
-              embeddings.push(dataset.embeddings[index]);
-            }
-          });
-          savedView.embeddings = embeddings;
-          if (savedView.camera != null) {
-            if (savedView.chartOptions == null) {
-              savedView.chartOptions = {};
-            }
-            savedView.chartOptions.camera = savedView.camera;
-          }
-        } else {
-          const {selectedEmbedding, obsCat} = getDefaultDatasetView(dataset);
-          if (selectedEmbedding) {
-            savedView.embeddings = [selectedEmbedding];
-            if (
-              (savedView.q == null || savedView.q.length === 0) &&
-              obsCat != null
-            ) {
-              savedView.q = [{id: obsCat, type: FEATURE_TYPE.OBS_CAT}];
-              savedView.activeFeature = {
-                name: obsCat,
-                type: FEATURE_TYPE.OBS_CAT,
-                embeddingKey: obsCat + '_' + getEmbeddingKey(selectedEmbedding),
-              };
-            }
-          }
-        }
-      })
-      .then(() => dispatch(setDatasetFilter(savedView.datasetFilter)))
-      .then(() => dispatch(restoreView(savedView)))
-      .then(() => dispatch(_updateCharts()))
-      .then(() => dispatch(handleFilterUpdated()))
-      .then(() => {
-        if (savedView.distributionPlotOptions != null) {
-          dispatch(
-            setDistributionPlotOptions(savedView.distributionPlotOptions)
-          );
-        }
-        let activeFeature = savedView.activeFeature;
-
-        if (
-          activeFeature == null &&
-          savedView.embeddings &&
-          savedView.embeddings.length > 0 &&
-          savedView.q &&
-          savedView.q.length > 0
-        ) {
-          // pick the 1st search token and 1st embedding
-          activeFeature = {
-            name: savedView.q[0].id,
-            type: savedView.q[0].type,
-            embeddingKey:
-              savedView.q[0].id +
-              '_' +
-              getEmbeddingKey(savedView.embeddings[0]),
-          };
-        }
-        if (activeFeature != null) {
-          dispatch(setActiveFeature(activeFeature));
-        }
-      })
-      .then(() => {
-        if (savedView.jobId != null) {
-          dispatch(setJobResultId(savedView.jobId));
-        }
-      })
-      .finally(() => dispatch(removeTask(task)))
-      .catch((err) => {
-        console.log(err);
-        dispatch(setMessage('Unable to restore saved view.'));
-        dispatch(loadDefaultDataset());
-      });
-  };
-}
-
-function _loadSavedView() {
-  return function (dispatch, getState) {
-    let savedView = {dataset: null};
-    // #q=
-    let q = window.location.hash.substring(3);
-    if (q.length > 0) {
-      try {
-        savedView = JSON.parse(window.decodeURIComponent(q));
-      } catch (err) {
-        return dispatch(setMessage('Unable to restore view.'));
-      }
-    }
-    if (savedView.link != null) {
-      dispatch(openLink(savedView.link, true));
-    } else if (savedView.dataset != null) {
-      dispatch(restoreSavedView(savedView));
-    } else {
-      dispatch(loadDefaultDataset());
-    }
-  };
-}
-
-export function saveDataset(payload) {
-  return function (dispatch, getState) {
-    let existingDataset = payload.dataset;
-    const isEdit = existingDataset != null;
-    if (existingDataset == null) {
-      existingDataset = {};
-    }
-
-    const formData = {};
-    const blacklist = new Set(['dataset']);
-    for (let key in payload) {
-      if (!blacklist.has(key)) {
-        const value = payload[key];
-        const existingValue = existingDataset[key];
-        if (isArray(value)) {
-          const stringValue = (value || []).join(',');
-          const existingStringValue = isArray(existingValue)
-            ? existingValue.join(', ')
-            : existingValue;
-          if (stringValue !== existingStringValue) {
-            formData[key] = value;
-          }
-        } else {
-          if (value != null && value !== existingValue) {
-            formData[key] = value;
-          }
-        }
-      }
-    }
-
-    if (Object.keys(formData).length === 0) {
-      dispatch(setDialog(null));
-      return;
-    }
-    if (isEdit) {
-      formData.id = payload.dataset.id;
-    }
-    const task = {name: 'Save Dataset'};
-    dispatch(addTask(task));
-    const request = getState().serverInfo.api.upsertDatasetPromise(formData);
-    request.upload.addEventListener('progress', function (e) {
-      if (formData['file'] != null) {
-        let percent = (e.loaded / e.total) * 100;
-        dispatch(setMessage('Percent ' + percent));
-      }
-    });
-    request.addEventListener('load', function (e) {
-      dispatch(removeTask(task));
-      dispatch(setDialog(null));
-      const status = request.status;
-      if (status != 200) {
-        return dispatch(
-          setMessage('Unable to save dataset. Please try again.')
-        );
-      }
-
-      const resp = JSON.parse(request.response);
-      delete formData['file'];
-      existingDataset = Object.assign({}, existingDataset, formData, resp);
-      existingDataset.owner = true;
-
-      if (isEdit) {
-        dispatch(updateDataset(existingDataset));
-        dispatch(setMessage('Dataset updated'));
-      } else {
-        dispatch(_addDataset(existingDataset));
-        dispatch(setMessage('Dataset added'));
-      }
-    });
-  };
-}
-
-export function deleteDataset(payload) {
-  return function (dispatch, getState) {
-    const task = {name: 'Delete Dataset'};
-    dispatch(addTask(task));
-    getState()
-      .serverInfo.api.deleteDatasetPromise(payload.dataset.id)
-      .then(() => {
-        dispatch(_setDataset(null));
-        dispatch(_deleteDataset({id: payload.dataset.id}));
-        dispatch(setDialog(null));
-        dispatch(setMessage('Dataset deleted'));
-      })
-      .finally(() => {
-        dispatch(removeTask(task));
-        dispatch(setDialog(null));
-      })
-      .catch((err) => {
-        handleError(
-          dispatch,
-          err,
-          'Unable to delete dataset. Please try again.'
-        );
-      });
-  };
-}
-
-function _addDataset(payload) {
-  return {type: ADD_DATASET, payload: payload};
-}
-
-function _deleteDataset(payload) {
-  return {type: DELETE_DATASET, payload: payload};
-}
-
-export function updateDataset(payload) {
-  return {type: UPDATE_DATASET, payload: payload};
-}
-
 export function setMessage(payload) {
   return {type: SET_MESSAGE, payload: payload};
 }
@@ -1330,10 +823,6 @@ export function setMarkers(payload) {
   return {type: SET_MARKERS, payload: payload};
 }
 
-function _setDatasetChoices(payload) {
-  return {type: SET_DATASET_CHOICES, payload: payload};
-}
-
 function addTask(payload) {
   return {type: ADD_TASK, payload: payload};
 }
@@ -1352,115 +841,6 @@ function _setLoadingApp(payload) {
 
 function _setDataset(payload) {
   return {type: SET_DATASET, payload: payload};
-}
-
-export function setJobResults(payload) {
-  return {type: SET_JOB_RESULTS, payload: payload};
-}
-
-function _setJobResultId(payload) {
-  return {type: SET_JOB_RESULT, payload: payload};
-}
-
-export function deleteJobResult(payload) {
-  return function (dispatch, getState) {
-    const task = {name: 'Delete Job'};
-    dispatch(addTask(task));
-    getState()
-      .dataset.api.deleteJob(payload)
-      .then(() => {
-        let jobResults = getState().jobResults;
-        const index = findIndex(jobResults, (item) => item.id === payload);
-        jobResults.splice(index, 1);
-        if (getState().jobResult === payload) {
-          dispatch(_setJobResultId(null));
-        }
-        dispatch(setJobResults(jobResults.slice()));
-      })
-      .finally(() => {
-        dispatch(removeTask(task));
-      })
-      .catch((err) => {
-        handleError(
-          dispatch,
-          err,
-          'Unable to delete result. Please try again.'
-        );
-      });
-  };
-}
-
-export function setJobResultId(jobId) {
-  return function (dispatch, getState) {
-    const existingJobResult = find(
-      getState().jobResults,
-      (item) => item.id === jobId
-    );
-    if (existingJobResult.data != null) {
-      // data already loaded
-      if (existingJobResult.type === 'de') {
-        updateJob(existingJobResult);
-      }
-      return dispatch(_setJobResultId(existingJobResult.id));
-    }
-    const task = {name: 'Open Job'};
-    dispatch(addTask(task));
-
-    let promises = [];
-    promises.push(getState().dataset.api.getJobParams(jobId));
-    promises.push(getState().dataset.api.getJob(jobId));
-    Promise.all(promises)
-      .then((values) => {
-        const params = values[0];
-        let result = values[1];
-        const jobResults = getState().jobResults;
-        const index = findIndex(jobResults, (item) => item.id === jobId);
-        if (index === -1) {
-          // job was deleted while fetching result?
-          console.log('Unable to find job');
-        } else {
-          if (result.data == null) {
-            result = {data: result};
-          }
-          const jobResult = Object.assign(
-            {},
-            params,
-            jobResults[index],
-            result
-          );
-          if (jobResult.type === 'de') {
-            updateJob(jobResult);
-          }
-          let promise = Promise.resolve({});
-          if (jobResult.params && jobResult.params.obs) {
-            const cachedData = getState().cachedData;
-            const q = {values: {dimensions: []}};
-            jobResult.params.obs.forEach((field) => {
-              if (cachedData[field] == null) {
-                q.values.dimensions.push(field);
-              }
-            });
-            if (q.values.dimensions.length > 0) {
-              promise = getState().dataset.api.getDataPromise(q, cachedData);
-            }
-          }
-          jobResults[index] = jobResult;
-          promise.then(() => {
-            dispatch(_setJobResultId(jobResult.id));
-          });
-        }
-      })
-      .finally(() => {
-        dispatch(removeTask(task));
-      })
-      .catch((err) => {
-        handleError(
-          dispatch,
-          err,
-          'Unable to retrieve result. Please try again.'
-        );
-      });
-  };
 }
 
 export function setMarkerOpacity(payload) {
@@ -1521,42 +901,15 @@ export function setSelectedEmbedding(payload) {
   };
 }
 
-export function setSavedDatasetState(payload) {
-  return {type: SET_SAVED_DATASET_STATE, payload: payload};
-}
-
 function setDatasetViews(payload) {
   return {type: SET_DATASET_VIEWS, payload: payload};
 }
 
-export function setDataset(id, loadDefaultView = true, setLoading = true) {
+export function setDataset(datasetInput, loadDefaultView = true, setLoading = true) {
   return function (dispatch, getState) {
-    let savedDatasetState = getState().savedDatasetState[id];
-    const datasetChoices = getState().datasetChoices;
-    let selectedChoice = null; // has id, owner, name
-    for (let i = 0; i < datasetChoices.length; i++) {
-      if (datasetChoices[i].id === id) {
-        selectedChoice = datasetChoices[i];
-        break;
-      }
-    }
-    if (selectedChoice == null) {
-      // search by name
-      for (let i = 0; i < datasetChoices.length; i++) {
-        if (datasetChoices[i].name === id) {
-          selectedChoice = datasetChoices[i];
-          break;
-        }
-      }
-    }
-    if (selectedChoice == null) {
-      //
-      dispatch(setMessage('Unable to find dataset'));
-      return Promise.reject('Unable to find dataset');
-    }
     // force re-render selected dataset dropdown
-    let dataset = Object.assign({}, selectedChoice);
-    dataset.id = id;
+    let dataset = Object.assign({}, datasetInput);
+    dataset.id = datasetInput.id;
     dataset.embeddings = [];
     dataset.features = [];
     dataset.obs = [];
@@ -1565,30 +918,19 @@ export function setDataset(id, loadDefaultView = true, setLoading = true) {
     let categoryNameResults;
     let datasetViews = [];
     let newDataset;
-    let jobResults = [];
 
     function onPromisesComplete() {
       newDataset = Object.assign({}, dataset, newDataset);
       newDataset.api = dataset.api;
-      newDataset.id = id;
+      newDataset.id = dataset.id;
       dispatch(_setDataset(newDataset));
-
-      if (newDataset.results && newDataset.results.length > 0) {
-        jobResults = jobResults.concat(newDataset.results);
-      }
-      dispatch(setJobResults(jobResults));
-      // if (jobResults.length === 1) {
-      //     dispatch(setJobResult(jobResults[0].id));
-      // }
 
       if (categoryNameResults != null) {
         dispatch(_handleCategoricalNameChange(categoryNameResults));
       }
       dispatch(setDatasetViews(datasetViews));
       // dispatch(setDatasetFilters(datasetFilters));
-      if (savedDatasetState) {
-        dispatch(restoreSavedView(savedDatasetState));
-      } else if (loadDefaultView) {
+      if (loadDefaultView) {
         dispatch(loadDefaultDatasetView());
       }
     }
@@ -1597,41 +939,16 @@ export function setDataset(id, loadDefaultView = true, setLoading = true) {
     if (task) {
       dispatch(addTask(task));
     }
-    const isDirectAccess = true;
-    if (isDirectAccess) {
-      dataset.api = new DirectAccessDataset();
-    } else {
-      // dataset.api = new RestDataset();
-    }
 
-    const initPromise = dataset.api.init(id, dataset.url);
+    dataset.api = new DirectAccessDataset();
+
+    const initPromise = dataset.api.init(dataset.id, dataset.url);
     const promises = [initPromise];
-
-    promises.push(
-      dataset.api.getJobs(id).then((jobs) => {
-        jobResults = jobs;
-      })
-    );
 
     const schemaPromise = dataset.api.getSchemaPromise().then((result) => {
       newDataset = result;
-    });
+    })
     promises.push(schemaPromise);
-    if (!isDirectAccess) {
-      const categoriesRenamePromise = getState()
-        .serverInfo.api.getCategoryNamesPromise(dataset.id)
-        .then((results) => {
-          categoryNameResults = results;
-        });
-
-      const savedViewsPromise = getState()
-        .serverInfo.api.getViewsPromise(dataset.id)
-        .then((results) => {
-          datasetViews = results;
-        });
-      promises.push(categoriesRenamePromise);
-      promises.push(savedViewsPromise);
-    }
 
     return Promise.all(promises)
       .then(() => onPromisesComplete())
@@ -2471,7 +1788,7 @@ function getNewEmbeddingData(state, features) {
   return newEmbeddingData;
 }
 
-function handleError(dispatch, err, message) {
+export function handleError(dispatch, err, message) {
   console.log(err);
   if (message == null) {
     message =
@@ -2480,163 +1797,4 @@ function handleError(dispatch, err, message) {
         : 'An unexpected error occurred. Please try again.';
   }
   dispatch(setMessage(new Error(message)));
-}
-
-export function listDatasets() {
-  return function (dispatch, getState) {
-    const task = {name: 'List Datasets'};
-    dispatch(addTask(task));
-    return getState()
-      .serverInfo.api.getDatasetsPromise()
-      .then((choices) => {
-        dispatch(_setDatasetChoices(choices));
-      })
-      .finally(() => dispatch(removeTask(task)))
-      .catch((err) => {
-        handleError(
-          dispatch,
-          err,
-          'Unable to retrieve datasets. Please try again.'
-        );
-      });
-  };
-}
-
-export function getDatasetStateJson(state) {
-  const {
-    chartOptions,
-    combineDatasetFilters,
-    activeFeature,
-    dataset,
-    embeddingLabels,
-    distributionPlotOptions,
-    distributionPlotInterpolator,
-    embeddings,
-    searchTokens,
-    datasetFilter,
-    interpolator,
-    jobResultId,
-    markerOpacity,
-    pointSize,
-    unselectedMarkerOpacity,
-    distributionData,
-  } = state;
-
-  let json = {
-    dataset: dataset.id,
-    embeddings: embeddings,
-  };
-  if (jobResultId != null) {
-    json.jobId = jobResultId;
-  }
-
-  const scatterPlot = chartOptions.scatterPlot;
-  if (json.embeddings.length > 0 && scatterPlot != null) {
-    json.camera = scatterPlot.getCameraDef();
-  }
-  if (activeFeature != null) {
-    json.activeFeature = activeFeature;
-  }
-  let jsonChartOptions = {};
-
-  const defaultChartOptions = {
-    showFog: DEFAULT_SHOW_FOG,
-    darkMode: DEFAULT_DARK_MODE,
-    labelFontSize: DEFAULT_LABEL_FONT_SIZE,
-    labelStrokeWidth: DEFAULT_LABEL_STROKE_WIDTH,
-  };
-
-  for (let key in defaultChartOptions) {
-    let value = chartOptions[key];
-    if (value !== defaultChartOptions[key]) {
-      jsonChartOptions[key] = value;
-    }
-  }
-  if (pointSize !== DEFAULT_POINT_SIZE) {
-    json.pointSize = pointSize;
-  }
-
-  if (Object.keys(jsonChartOptions).length > 0) {
-    json.chartOptions = jsonChartOptions;
-  }
-
-  if (searchTokens.length > 0) {
-    json.q = searchTokens;
-  }
-
-  let datasetFilterJson = {};
-  for (let key in datasetFilter) {
-    let filterObject = datasetFilter[key];
-    if (Array.isArray(filterObject)) {
-      // brush filter
-      const array = [];
-      filterObject.forEach((brush) => {
-        const brushJson = Object.assign({}, brush);
-        brushJson.indices = Array.from(brush.indices);
-        array.push(brushJson);
-      });
-      datasetFilterJson[key] = array;
-    } else if (filterObject.operation === 'in') {
-      datasetFilterJson[key] = {
-        operation: filterObject.operation,
-        value: filterObject.value,
-      };
-    } else {
-      if (
-        filterObject.operation !== '' &&
-        !isNaN(filterObject.value) &&
-        filterObject.value != null
-      ) {
-        datasetFilterJson[key] = {
-          operation: filterObject.operation,
-          value: filterObject.value,
-        };
-      }
-    }
-  }
-  if (Object.keys(datasetFilterJson).length > 0) {
-    json.datasetFilter = datasetFilterJson;
-  }
-  if (combineDatasetFilters !== 'and') {
-    json.combineDatasetFilters = combineDatasetFilters;
-  }
-  if (markerOpacity !== DEFAULT_MARKER_OPACITY) {
-    json.markerOpacity = markerOpacity;
-  }
-  if (unselectedMarkerOpacity !== DEFAULT_UNSELECTED_MARKER_OPACITY) {
-    json.unselectedMarkerOpacity = unselectedMarkerOpacity;
-  }
-
-  if (distributionData && distributionData.length > 0) {
-    json.distributionPlotOptions = distributionPlotOptions;
-    json.distributionPlotInterpolator = Object.assign(
-      {},
-      distributionPlotInterpolator,
-      {value: null}
-    );
-  }
-
-  // TODO save custom color ranges per feature
-  for (let key in interpolator) {
-    const typedInterpolator = interpolator[key];
-    const defaultInterpolator = DEFAULT_INTERPOLATORS[key];
-
-    if (
-      defaultInterpolator == null ||
-      typedInterpolator.name !== defaultInterpolator.name ||
-      typedInterpolator.reversed !== defaultInterpolator.reversed
-    ) {
-      if (json.interpolator == null) {
-        json.interpolator = {};
-      }
-      json.interpolator[key] = Object.assign({}, typedInterpolator, {
-        value: undefined,
-      });
-    }
-  }
-
-  if (embeddingLabels.length > 0) {
-    json.embeddingLabels = embeddingLabels;
-  }
-  return json;
 }

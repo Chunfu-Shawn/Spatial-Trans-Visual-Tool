@@ -2,7 +2,7 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import {applyMiddleware, createStore} from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import {initAuth, SET_DATASET, SET_EMAIL, SET_SERVER_INFO, setChartSize, setWindowSize} from './actions';
+import {initAuth, SET_DATASET, SET_EMAIL, SET_SERVER_INFO, setWindowSize} from './actions';
 import rootReducer from './reducers';
 import AppWrapper from './AppWrapper';
 // import * as serviceWorker from './serviceWorker';
@@ -10,6 +10,12 @@ import mixpanel from 'mixpanel-browser';
 
 
 export function VisualTool(props) {
+    const {
+        width = 1000,
+        height = 800,
+        setCustom = false,
+        dataset
+    } = props
     let useMixPanel = false;
     const logger = (store) => (next) => (action) => {
         if (action.type === SET_SERVER_INFO) {
@@ -35,14 +41,11 @@ export function VisualTool(props) {
         rootReducer,
         applyMiddleware(thunkMiddleware, logger)
     );
-    const width = props.width !== null ? props.width - 250 : "1200"
-    const height = props.height !== null ? props.height - 180 : "1000"
-    const setCustom = props.setCustom !== null ? props.setCustom : false
-    store.dispatch(initAuth());
+    store.dispatch(initAuth(dataset));
     store.dispatch(setWindowSize(
         {
-            width: width,
-            height: height,
+            width: width - 250,
+            height: height - 180,
             setCustom: setCustom
         }));
 
@@ -55,9 +58,9 @@ export function VisualTool(props) {
                  borderStyle: "solid",
                  borderWidth: 1,
                  borderColor: "lightgray",
-                 // whether custom?
-                 width: setCustom ? width + 250 : "100vw",
-                 height: setCustom ? height + 180: "100vh",
+                 // whether custom
+                 width: setCustom ? width: "100vw",
+                 height: setCustom ? height: "100vh",
                  overflow: setCustom ? "scroll" : "visible",
                  transform:"translate3d(0, 0, 0)"
         }}>

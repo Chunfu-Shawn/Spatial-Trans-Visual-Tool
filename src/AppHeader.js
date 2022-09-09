@@ -15,7 +15,6 @@ import {
   setDialog,
   setDrawerOpen,
   setMessage,
-  setSavedDatasetState,
   setTab,
 } from './actions';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -38,11 +37,8 @@ function AppHeader(props) {
     handleDialog,
     handleTab,
     loadingApp,
-    jobResults,
-    email,
     selection,
     searchTokens,
-    serverInfo,
     tab,
   } = props;
 
@@ -80,8 +76,6 @@ function AppHeader(props) {
   const obsCat = searchTokens
     .filter((item) => item.type === FEATURE_TYPE.OBS_CAT)
     .map((item) => item.id);
-  const isSignedOut =
-    !loadingApp.loading && email == null && serverInfo.auth.clientId !== '';
 
   return (
     <Box sx={{display: 'flex'}}>
@@ -145,7 +139,7 @@ function AppHeader(props) {
             {dataset != null ? dataset.name : ''}
           </Typography>
           <div style={{display: 'flex', marginLeft: 'auto'}}>
-            {!isSignedOut && !loadingApp.loading && (
+            {!loadingApp.loading && (
               <Tabs
                 textColor="inherit"
                 indicatorColor="secondary"
@@ -170,14 +164,6 @@ function AppHeader(props) {
                   label="Composition"
                   disabled={dataset == null || obsCat.length < 2}
                 />
-                {
-                  <Tab
-                    data-testid="results-tab"
-                    value="results"
-                    label="Results"
-                    disabled={dataset == null || jobResults.length === 0}
-                  />
-                }
               </Tabs>
             )}
             {
@@ -215,7 +201,6 @@ const mapStateToProps = (state) => {
     dataset: state.dataset,
     datasetChoices: state.datasetChoices,
     datasetFilter: state.datasetFilter,
-    datasetSelectorColumns: state.serverInfo.datasetSelectorColumns,
     dialog: state.dialog,
     distributionData: state.distributionData,
     distributionPlotInterpolator: state.distributionPlotInterpolator,
@@ -224,8 +209,6 @@ const mapStateToProps = (state) => {
     embeddingLabels: state.embeddingLabels,
     embeddings: state.embeddings,
     interpolator: state.interpolator,
-    jobResults: state.jobResults,
-    jobResultId: state.jobResultId,
     loading: state.loading,
     loadingApp: state.loadingApp,
     markerOpacity: state.markerOpacity,
@@ -234,7 +217,6 @@ const mapStateToProps = (state) => {
     savedDatasetState: state.savedDatasetState,
     searchTokens: state.searchTokens,
     selection: state.selection,
-    serverInfo: state.serverInfo,
     tab: state.tab,
     unselectedMarkerOpacity: state.unselectedMarkerOpacity,
     user: state.user,
@@ -247,9 +229,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     handleMessage: (value) => {
       dispatch(setMessage(value));
-    },
-    handleSavedDatasetState: (value) => {
-      dispatch(setSavedDatasetState(value));
     },
     handleDataset: (value) => {
       dispatch(setDataset(value));

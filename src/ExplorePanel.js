@@ -21,7 +21,6 @@ import React, {useState} from 'react';
 import withStyles from '@mui/styles/withStyles';
 import {
   deleteFeatureSet,
-  deleteLink,
   downloadSelectedIds,
   getDatasetFilterNames,
   getEmbeddingKey,
@@ -232,7 +231,6 @@ function ExplorePanel(props) {
     removeDatasetFilter,
     searchTokens,
     selection,
-    serverInfo,
     tab,
   } = props;
 
@@ -704,23 +702,6 @@ function ExplorePanel(props) {
               onChange={onFeatureSetsChange}
               getOptionSelected={(option, value) => option.id === value.id}
             />
-            {serverInfo.capabilities.has(SERVER_CAPABILITY_FEATURE_SETS) && (
-              <div>
-                <Tooltip title={'Save Current Genes/Features'}>
-                  <Link
-                    style={{
-                      float: 'right',
-                      fontSize: '0.75rem',
-                      marginRight: 4,
-                      display: xSearchTokens.length === 0 ? 'none' : '',
-                    }}
-                    onClick={onSaveFeatureList}
-                  >
-                    Save
-                  </Link>
-                </Tooltip>
-              </div>
-            )}
           </FormControl>
         }
       </div>
@@ -825,7 +806,6 @@ const mapStateToProps = (state) => {
     savedDatasetFilter: state.savedDatasetFilter,
     searchTokens: state.searchTokens,
     selection: state.selection,
-    serverInfo: state.serverInfo,
     tab: state.tab,
   };
 };

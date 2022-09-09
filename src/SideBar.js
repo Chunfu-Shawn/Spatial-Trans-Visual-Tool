@@ -1,23 +1,15 @@
 import {InputLabel, Switch, Typography} from '@mui/material';
-import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Slider from '@mui/material/Slider';
 import TextField from '@mui/material/TextField';
-import Tooltip from '@mui/material/Tooltip';
 import {debounce, find} from 'lodash';
 import React, {useEffect, useMemo, useState} from 'react';
 import {
-  deleteLink,
   getTraceKey,
   handleDomainChange,
-  openLink,
   SAVE_DATASET_FILTER_DIALOG,
   setChartOptions,
   setChartSize,
@@ -30,22 +22,17 @@ import {
   setUnselectedPointSize,
 } from './actions';
 import {EditableColorScheme} from './EditableColorScheme';
-import JobResultOptions from './JobResultOptions';
 import {
   copyToClipboard,
   REACT_MD_OVERRIDES,
-  SERVER_CAPABILITY_LINKS,
   TRACE_TYPE_META_IMAGE,
 } from './util';
-import Link from '@mui/material/Link';
 import withStyles from '@mui/styles/withStyles';
 import {connect} from 'react-redux';
 import Divider from '@mui/material/Divider';
 import ExplorePanel from './ExplorePanel';
-import JobPanel from './JobPanel';
 import Popover from '@mui/material/Popover';
 import ReactMarkdown from 'markdown-to-jsx';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Menu from '@mui/material/Menu';
 
 const pointSizeOptions = [
@@ -121,14 +108,12 @@ function SideBar(props) {
     chartOptions,
     chartSize,
     classes,
-    compareActions,
     datasetViews,
     embeddingData,
     globalFeatureSummary,
     interpolator,
     markerOpacity,
     pointSize,
-    serverInfo,
     tab,
     unselectedPointSize,
     unselectedMarkerOpacity,
@@ -403,7 +388,6 @@ function SideBar(props) {
         )}
       </Menu>
       <ExplorePanel />
-      <JobPanel compareActions={compareActions} />
       {selectedView && (
         <Popover
           id={'view-details'}
@@ -581,74 +565,6 @@ function SideBar(props) {
           />
         </FormControl>
       </div>
-
-      {serverInfo.capabilities.has(SERVER_CAPABILITY_LINKS) && (
-        <div
-          style={
-            tab === 'embedding' ||
-            tab === 'distribution' ||
-            tab === 'composition'
-              ? null
-              : {display: 'none'}
-          }
-        >
-          <Divider />
-          <Typography
-            gutterBottom={false}
-            component={'h1'}
-            className={classes.title}
-          >
-            Links
-          </Typography>
-          <Divider />
-          <FormControl className={classes.formControl}>
-            <Tooltip title={'Save Current Visualization State'}>
-              <Link
-                style={{
-                  float: 'right',
-                  fontSize: '0.75rem',
-                }}
-                onClick={onViewSaved}
-              >
-                Save
-              </Link>
-            </Tooltip>
-          </FormControl>
-
-          {datasetViews.length === 0 && (
-            <Box color="text.secondary">No saved links</Box>
-          )}
-          {datasetViews.length > 0 && (
-            <List dense={true} style={{marginTop: 10}}>
-              {datasetViews.map((item) => (
-                <ListItem
-                  key={item.id}
-                  data-key={item.id}
-                  button
-                  onClick={(e) => openView(item.id)}
-                  secondaryAction={
-                    <IconButton
-                      edge="end"
-                      disableRipple={true}
-                      onClick={(event) => onLinkContextMenu(event, item)}
-                      aria-label="menu"
-                      size="small"
-                    >
-                      <ArrowDropDownIcon />
-                    </IconButton>
-                  }
-                >
-                  <ListItemText primary={item.name} />
-                </ListItem>
-              ))}
-            </List>
-          )}
-        </div>
-      )}
-
-      <div style={tab === 'results' ? null : {display: 'none'}}>
-        <JobResultOptions />
-      </div>
     </div>
   );
 }
@@ -668,7 +584,6 @@ const mapStateToProps = (state) => {
     markerOpacity: state.markerOpacity,
     markers: state.markers,
     pointSize: state.pointSize,
-    serverInfo: state.serverInfo,
     tab: state.tab,
     unselectedPointSize: state.unselectedPointSize,
     unselectedMarkerOpacity: state.unselectedMarkerOpacity,

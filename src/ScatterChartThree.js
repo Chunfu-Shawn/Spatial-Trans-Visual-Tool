@@ -679,7 +679,7 @@ function ScatterChartThree(props) {
         style={{
           display: 'inline-block',
           // change canvas size
-          width: chartSize.width-200,
+          width: chartSize.width,
           height: chartSize.height,
         }}
         ref={containerElementRef}

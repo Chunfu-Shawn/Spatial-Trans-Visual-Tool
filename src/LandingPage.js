@@ -5,20 +5,13 @@ import {
   ListItemText,
   Paper,
 } from '@mui/material';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import ReactMarkdown from 'markdown-to-jsx';
 import React from 'react';
-import {connect} from 'react-redux';
-import {REACT_MD_OVERRIDES} from './util';
 import List from '@mui/material/List';
 
-function LandingPage(props) {
+function LandingPage() {
   return (
     <Paper elevation={0}>
-      <Typography variant="h5">
-        Cirrocumulus: an interactive tool for large-scale single-cell genomics
-      </Typography>
       <Divider />
       <Typography variant="h6">Links</Typography>
       <List dense>
@@ -26,22 +19,15 @@ function LandingPage(props) {
               component="a"
               target="_blank"
               rel="noopener noreferrer"
-              href="/help/manual/datasets"
-          ><ListItemText primary={'Help - Manual'}></ListItemText>
+              href="/help/manual/datasets#data_visual_help"
+          >
+              <ListItemText primary={'Help - Manual'}></ListItemText>
           </ListItemButton>
         <ListItemButton
           component="a"
           target="_blank"
           rel="noopener noreferrer"
-          href="http://cirrocumulus.readthedocs.io/"
-        >
-          <ListItemText primary={'Documentation'}></ListItemText>
-        </ListItemButton>
-        <ListItemButton
-          component="a"
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://github.com/klarman-cell-observatory/cirrocumulus"
+          href="https://github.com/Chunfu-Shawn/Spatial-Trans-Visual-Tool"
         >
           <ListItemText primary={'Source Code'}></ListItemText>
         </ListItemButton>
@@ -82,14 +68,6 @@ function LandingPage(props) {
           <ListItemText primary="Click chart to set primary view" />
         </ListItem>
       </List>
-      {props.serverInfo && props.serverInfo.footer && (
-        <Box>
-          <ReactMarkdown
-            options={{overrides: REACT_MD_OVERRIDES}}
-            children={props.serverInfo.footer}
-          />
-        </Box>
-      )}
       <Divider />
       {process.env.REACT_APP_VERSION != null && (
         <Typography variant="body2">
@@ -100,13 +78,4 @@ function LandingPage(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    serverInfo: state.serverInfo,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
+export default LandingPage;
