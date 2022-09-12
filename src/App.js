@@ -79,7 +79,7 @@ function App(props) {
           '& .MuiDrawer-paper': {
             width: drawerOpen && dataset != null ? drawerWidth : null,
             boxSizing: 'border-box',
-              height:"100%",
+              height:"auto",
           },
         }}
       >

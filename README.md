@@ -22,7 +22,7 @@ pip install cirrocumulus
 cirro prepare_data pbmc3k.h5ad --format jsonl
 ```
 ### Create the file datasets.json in the public directory:
-```
+```json lines
 [
     {
         "id": "pbmc3k",
@@ -41,9 +41,29 @@ You may also see any lint errors in the console.
 
 
 ## 2. Customization API
+### Dataset
+| Attributions | Type | Default | Description                |
+|--------------|------|-------|----------------------------|
+| dataset      | JSON | null  | dataset users want to view |
+
+Example:
+```javascript
+dataset = {
+    "id": "adata_a2p2",
+    "name": "adata_a2p2",
+    "url": "/datasets/GSM5833739_10x_Visium_deal/GSM5833739_10x_Visium_deal.jsonl"
+} // the url means loads dataset from localhost:3000
+<VisualTool dataset={dataset}/>
+```
+
 ### Module Size
-| Attributions | Type      | Default | Description                  |
-|--------------|-----------|---------|------------------------------|
-| setCustom    | true/false | false   | custom size or adaptive size |
-| width        | "number"  | 1100    | the width of this module     |
-| height       | "number" | 800     | the height of this module    |
+| Attributions | Type      | Default | Description                   |
+|--------------|-----------|---------|-------------------------------|
+| setCustom    | true/false | false   | custom size or adaptive size  |
+| width        | "number"  | 1100    | the width of this module      |
+| height       | "number" | 800     | the max height of this module |
+
+Example:
+```javascript
+<VisualTool setCustom={true} width={1200} dataset={dataset}/>
+```

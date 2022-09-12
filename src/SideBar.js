@@ -356,37 +356,7 @@ function SideBar(props) {
   }
 
   return (
-    <div className={classes.root}>
-      <Menu
-        anchorReference="anchorPosition"
-        anchorPosition={
-          contextMenu != null
-            ? {
-                top: contextMenu.mouseY,
-                left: contextMenu.mouseX,
-              }
-            : undefined
-        }
-        open={Boolean(contextMenu)}
-        onClose={(e) => {
-          setContextMenu(null);
-          setSelectedLink(null);
-        }}
-      >
-        {selectedLink && (selectedLink.notes || selectedLink.last_updated) && (
-          <MenuItem onClick={(e) => viewDetails(e, selectedLink.id)}>
-            Info
-          </MenuItem>
-        )}
-        {selectedLink && (
-          <MenuItem onClick={(e) => copyView(selectedLink.id)}>Copy</MenuItem>
-        )}
-        {selectedLink && (
-          <MenuItem onClick={(e) => deleteView(selectedLink.id)}>
-            Delete
-          </MenuItem>
-        )}
-      </Menu>
+    <div className={classes.root} style={{padding:6}}>
       <ExplorePanel />
       {selectedView && (
         <Popover
@@ -541,17 +511,19 @@ function SideBar(props) {
           onInterpolator={onInterpolator}
         />
 
-        <FormControl className={classes.formControl}>
-          <TextField
-            value={labelFontSize}
-            onChange={onLabelFontSize}
-            size="small"
-            sx={{width: 130}}
-            InputLabelProps={{shrink: true}}
-            fullWidth
-            label="Label Font Size"
-          />
-        </FormControl>
+        {/*
+          <FormControl className={classes.formControl}>
+            <TextField
+                value={labelFontSize}
+                onChange={onLabelFontSize}
+                size="small"
+                sx={{width: 130}}
+                InputLabelProps={{shrink: true}}
+                fullWidth
+                label="Label Font Size"
+            />
+          </FormControl>
+        }
 
         <FormControl className={classes.formControl}>
           <TextField
@@ -564,6 +536,7 @@ function SideBar(props) {
             label="Label Shadow Size"
           />
         </FormControl>
+        */}
       </div>
     </div>
   );

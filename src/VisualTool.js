@@ -2,7 +2,7 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import {applyMiddleware, createStore} from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import {initAuth, SET_DATASET, SET_EMAIL, SET_SERVER_INFO, setWindowSize} from './actions';
+import {init, SET_DATASET, SET_EMAIL, SET_SERVER_INFO, setWindowSize} from './actions';
 import rootReducer from './reducers';
 import AppWrapper from './AppWrapper';
 // import * as serviceWorker from './serviceWorker';
@@ -41,7 +41,7 @@ export function VisualTool(props) {
         rootReducer,
         applyMiddleware(thunkMiddleware, logger)
     );
-    store.dispatch(initAuth(dataset));
+    store.dispatch(init(dataset));
     store.dispatch(setWindowSize(
         {
             width: width - 250,
@@ -60,7 +60,8 @@ export function VisualTool(props) {
                  borderColor: "lightgray",
                  // whether custom
                  width: setCustom ? width: "100vw",
-                 height: setCustom ? height: "100vh",
+                 maxHeight: setCustom ? height: "100vh",
+                 minHeight: 500,
                  overflow: setCustom ? "scroll" : "visible",
                  transform:"translate3d(0, 0, 0)"
         }}>

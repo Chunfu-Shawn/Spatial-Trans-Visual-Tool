@@ -594,7 +594,7 @@ function ExplorePanel(props) {
             </div>
           </FormControl>
         )}
-        {layerOptions.length > 0 && (
+        {/*layerOptions.length > 0 && (
           <FormControl sx={{display: 'block'}}>
             <AutocompleteVirtualized
               label={'Layers'}
@@ -607,7 +607,7 @@ function ExplorePanel(props) {
               onChange={onLayersChange}
             />
           </FormControl>
-        )}
+        )*/}
         {annotationOptions.length > 0 && (
           <FormControl sx={{display: 'block'}}>
             <AutocompleteVirtualized

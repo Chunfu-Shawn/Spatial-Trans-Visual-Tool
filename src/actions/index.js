@@ -149,7 +149,7 @@ export function getTraceKey(trace) {
   return trace.name + '_' + getEmbeddingKey(trace.embedding);
 }
 
-export function initAuth(dataset) {
+export function init(dataset) {
   return function (dispatch, getState) {
     dispatch(_setLoadingApp({loading: true, progress: 0}));
     const startTime = new Date().getTime();
@@ -170,14 +170,16 @@ export function initAuth(dataset) {
     dispatch(_setLoadingApp({loading: false}));
     const task = {name: 'Load Dataset'};
     dispatch(addTask(task));
-    try{
-      dispatch(setDataset(dataset))
-    }catch (err){
-      handleError(
-          dispatch,
-          err,
-          'Unable to retrieve datasets. Please try again.'
-      );
+    if(dataset !== null){
+      try{
+        dispatch(setDataset(dataset))
+      }catch (err){
+        handleError(
+            dispatch,
+            err,
+            'Unable to retrieve datasets. Please try again.'
+        );
+      }
     }
     dispatch(removeTask(task))
     return Promise.resolve();
@@ -716,7 +718,7 @@ function getDefaultDatasetView(dataset) {
   let obsCat = null;
   if (embeddingNames.length > 0) {
     // default embedding view priorities
-    let embeddingPriorities = ['spatial','tissue_hires', 'fle', 'umap', 'tsne'];
+    let embeddingPriorities = ['tissue_hires','spatial', 'fle', 'umap', 'tsne'];
     let embeddingName = null;
     for (
       let priorityIndex = 0;
