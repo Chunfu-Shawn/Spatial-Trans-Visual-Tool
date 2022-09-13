@@ -149,7 +149,7 @@ export function getTraceKey(trace) {
   return trace.name + '_' + getEmbeddingKey(trace.embedding);
 }
 
-export function init(dataset) {
+export function init(dataset,geneId) {
   return function (dispatch, getState) {
     dispatch(_setLoadingApp({loading: true, progress: 0}));
     const startTime = new Date().getTime();
@@ -172,7 +172,7 @@ export function init(dataset) {
     dispatch(addTask(task));
     if(dataset !== null){
       try{
-        dispatch(setDataset(dataset))
+        dispatch(setDataset(dataset,geneId))
       }catch (err){
         handleError(
             dispatch,
@@ -801,6 +801,17 @@ function loadDefaultDatasetView() {
   };
 }
 
+function loadGeneDefaultDatasetView(geneId) {
+  return function (dispatch, getState) {
+    const dataset = getState().dataset;
+    const {selectedEmbedding} = getDefaultDatasetView(dataset);
+    dispatch(setSearchTokens([{id: geneId, type: 'X'}]));
+    if (selectedEmbedding != null) {
+      dispatch(setSelectedEmbedding([selectedEmbedding]));
+    }
+  };
+}
+
 export function setMessage(payload) {
   return {type: SET_MESSAGE, payload: payload};
 }
@@ -907,7 +918,7 @@ function setDatasetViews(payload) {
   return {type: SET_DATASET_VIEWS, payload: payload};
 }
 
-export function setDataset(datasetInput, loadDefaultView = true, setLoading = true) {
+export function setDataset(datasetInput, geneId, loadDefaultView = true, setLoading = true) {
   return function (dispatch, getState) {
     // force re-render selected dataset dropdown
     let dataset = Object.assign({}, datasetInput);
@@ -932,9 +943,11 @@ export function setDataset(datasetInput, loadDefaultView = true, setLoading = tr
       }
       dispatch(setDatasetViews(datasetViews));
       // dispatch(setDatasetFilters(datasetFilters));
-      if (loadDefaultView) {
-        dispatch(loadDefaultDatasetView());
-      }
+      if(geneId !== undefined) {
+          dispatch(loadGeneDefaultDatasetView(geneId));
+      }else if (loadDefaultView) {
+          dispatch(loadDefaultDatasetView());
+        }
     }
 
     const task = setLoading ? {name: 'Set dataset'} : null;

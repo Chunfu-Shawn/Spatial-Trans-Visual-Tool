@@ -138,6 +138,7 @@ function EmbeddingChart(props) {
     embeddingLabels
   );
   const displayName = primaryTrace.name === '__count' ? '' : primaryTrace.name;
+
   return (
     <Box bgcolor={'inherit'} color="inherit" style={{position: 'relative'}}>
       <Box

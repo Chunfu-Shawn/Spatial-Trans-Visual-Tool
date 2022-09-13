@@ -115,6 +115,7 @@ function ScatterChartThree(props) {
   const [tip, setTip] = useState({html: ''});
 
   const {
+    gene,
     cachedData,
     categoricalNames,
     chartOptions,
@@ -656,23 +657,23 @@ function ScatterChartThree(props) {
   return (
     <>
       <div className={classes.root}>
-        <ChartToolbar
-          dragmode={chartOptions.dragmode}
-          // editSelection={chartOptions.editSelection}
-          onGallery={onGallery}
-          animating={chartOptions.animating}
-          showFog={chartOptions.showFog}
-          onShowFog={onShowFog}
-          is3d={trace && trace.z != null}
-          toggleAnimation={onToggleAnimation}
-          onSaveImage={onSaveImage}
-          onDragMode={onDragMode}
-          // onCopyImage={onCopyImage}
-          // onEditSelection={onEditSelection}
-          onShowAxis={onShowAxis}
-          onHome={resetCamera}
-          showAxis={chartOptions.showAxis}
-        />
+        { gene || <ChartToolbar
+            dragmode={chartOptions.dragmode}
+            // editSelection={chartOptions.editSelection}
+            onGallery={onGallery}
+            animating={chartOptions.animating}
+            showFog={chartOptions.showFog}
+            onShowFog={onShowFog}
+            is3d={trace && trace.z != null}
+            toggleAnimation={onToggleAnimation}
+            onSaveImage={onSaveImage}
+            onDragMode={onDragMode}
+            // onCopyImage={onCopyImage}
+            // onEditSelection={onEditSelection}
+            onShowAxis={onShowAxis}
+            onHome={resetCamera}
+            showAxis={chartOptions.showAxis}
+        />}
       </div>
       <div
         data-testid="scatter-chart-three"

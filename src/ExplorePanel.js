@@ -256,6 +256,7 @@ function ExplorePanel(props) {
           })
         )
     );
+    console.log("values: " + JSON.stringify(values))
   }
 
   function onModulesChange(event, values) {

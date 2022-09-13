@@ -5,15 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1daba91c-ff2d-42fb-b65c-b1eedb162a7c" name="变更" comment="">
-      <change afterPath="$PROJECT_DIR$/src/dataset.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/SimpliedEmbeddingChart.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/SingleGeneExpression.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/SingleGeneExpressionModule.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/SingleGeneExpressionWrapper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/singleGene.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/singleGene.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/dataset.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/dataset.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EmbeddingChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/EmbeddingChart.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ExplorePanel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ExplorePanel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SideBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SideBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StaticServerApi.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/VisualTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/VisualTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ScatterChartThree.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ScatterChartThree.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/actions/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,7 +85,7 @@
       <workItem from="1662557241894" duration="3288000" />
       <workItem from="1662628161299" duration="22079000" />
       <workItem from="1662724937304" duration="20268000" />
-      <workItem from="1662973508984" duration="554000" />
+      <workItem from="1662973508984" duration="15823000" />
     </task>
     <servers />
   </component>
