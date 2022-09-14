@@ -1,4 +1,3 @@
-import '../src/index.css'
 
 function MyApp({ Component, pageProps }) {
 

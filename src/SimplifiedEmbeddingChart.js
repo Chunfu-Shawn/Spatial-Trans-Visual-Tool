@@ -77,7 +77,6 @@ function SimplifiedEmbeddingChart(props) {
             {primaryTrace.type === 'scatter' &&
                 primaryTrace.embedding.mode == null && (
                     <SimplifiedScatterChartThree
-                        gene={true}
                         trace={primaryTrace}
                         cachedData={cachedData}
                         obsCat={activeEmbeddingLabels}

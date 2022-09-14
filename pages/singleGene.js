@@ -16,13 +16,17 @@ export default function SingleGene() {
         {
             ssr: false,
         })
-    const onSearch = (value) => setGene(value);
     return (
         <div style={{margin:50}}>
             <h3 >Welcome to Spatial-Transcriptome-Visual-Tool!</h3>
             <Link href={"/"}><a>Back to Home</a></Link>
+            <div style={{height:"50vh"}}/>
             <h3>{gene} expression pattern</h3>
-            <DynamicGeneExpress setCustom={true} width={400} height={400} dataset={dataset} gene={firstUpperCase(gene)}/>
+            <div style={{display:"flex",flexFlow:"row wrap"}}>
+                <DynamicGeneExpress setCustom={true} width={400} height={400} dataset={dataset} gene={firstUpperCase(gene)}/>
+                <DynamicGeneExpress setCustom={true} width={400} height={400} dataset={dataset} gene={firstUpperCase('brca1')}/>
+                <DynamicGeneExpress setCustom={true} width={400} height={400} dataset={dataset} gene={firstUpperCase('id2')}/>
+            </div>
         </div>
     )
 }

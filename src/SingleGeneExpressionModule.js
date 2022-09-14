@@ -31,7 +31,7 @@ export function SingleGeneExpressionModule(props) {
     return(
         <Provider store={store}>
             {/*<React.StrictMode>*/}
-            <div id={"VisualTool"}
+            <div id={`VisualTool_${gene}`}
                  style={{
                      borderRadius: 5,
                      borderStyle: "solid",
@@ -40,10 +40,9 @@ export function SingleGeneExpressionModule(props) {
                      // whether custom
                      width: setCustom ? width: 400,
                      height: setCustom ? height: 400,
-                     overflow: setCustom ? "scroll" : "visible",
                      transform:"translate3d(0, 0, 0)"
                  }}>
-                <SingleGeneExpressionWrapper/>
+                <SingleGeneExpressionWrapper gene={gene}/>
             </div>
             {/*</React.StrictMode>*/}
         </Provider>

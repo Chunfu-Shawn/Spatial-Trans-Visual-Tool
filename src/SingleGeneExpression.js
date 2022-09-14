@@ -4,7 +4,6 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import LinearProgress from '@mui/material/LinearProgress';
 import * as React from 'react';
-import {useEffect} from 'react';
 import Box from '@mui/material/Box';
 import CloseIcon from '@mui/icons-material/Close';
 import {connect} from 'react-redux';
@@ -13,9 +12,19 @@ import {
     setDialog,
     setMessage,
 } from './actions';
-
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 import LandingPage from './LandingPage';
 import SimpliedEmbeddingChart from "./SimplifiedEmbeddingChart";
+
+const antIcon = (
+    <LoadingOutlined
+        style={{
+            fontSize: 24,
+        }}
+        spin
+    />
+);
 
 
 function SingleGeneExpression(props) {
@@ -26,24 +35,19 @@ function SingleGeneExpression(props) {
         message,
         setMessage,
         tab,
-        handleChartOptions
+        gene
     } = props;
 
     function handleMessageClose() {
         setMessage(null);
     }
 
-    // tabs: 1. embedding, 2. grouped table with kde per feature, dotplot
-    // need to add filter, selection
-
     return (
-        <Box sx={{display: 'flex', backgroundColor: "white"}}>
+        <Box sx={{display: 'flex', backgroundColor: "white",height:"100%"}}>
             <Box
                 scomponent="main"
                 sx={{
                     flexGrow: 1,
-                    marginLeft: 1,
-                    paddingBottom: 14,
                     backgroundColor: "white",
                 }}
             >
@@ -74,12 +78,27 @@ function SingleGeneExpression(props) {
             </Box>
 
             {loading && (
-                <Dialog aria-labelledby="loading-dialog-title" open={true}
-                        container={() => document.getElementById('VisualTool')}>
-                    <DialogTitle id="loading-dialog-title">
-                        <CircularProgress size={20} /> Loading...
-                    </DialogTitle>
-                </Dialog>
+                <div style={{background:"#797979",width:"100%",height:"100%"}}>
+                    <div style={{
+                        padding:5,
+                        color:"white",
+                        display:"flex",
+                        width:130,
+                        background:"#3a3a3a",
+                        position:"absolute",
+                        top:"50%",
+                        left:"50%",
+                        borderRadius: 4,
+                        borderStyle: "solid",
+                        borderWidth: 2,
+                        borderColor:"#3a3a3a",
+                        boxShadow: "2px 2px 5px 1px #212121",
+                        transform: "translate(-50%, -50%)"//将元素沿x轴反方向移动本元素的一半width,沿y轴反方向移动本元素的一半height
+                    }}>
+                        <Spin indicator={antIcon} />
+                        <span style={{fontSize:18,marginLeft:10}}>Loading...</span>
+                    </div>
+                </div>
             )}
 
             {message != null && (
@@ -107,8 +126,8 @@ function SingleGeneExpression(props) {
                     ]}
                     message={
                         <span id="message-id">
-              {message instanceof Error ? message.message : message}
-            </span>
+                            {message instanceof Error ? message.message : message}
+                        </span>
                     }
                 />
             )}
