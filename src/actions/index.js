@@ -34,9 +34,9 @@ export const DEFAULT_MARKER_OPACITY = 1;
 export const DEFAULT_UNSELECTED_MARKER_OPACITY = 0.1;
 export const DEFAULT_INTERPOLATORS = {};
 DEFAULT_INTERPOLATORS[FEATURE_TYPE.X] = {
-  name: 'Viridis',
+  name: 'OrRd',
   reversed: false,
-  value: getInterpolator('Viridis'),
+  value: getInterpolator('OrRd'),
 };
 DEFAULT_INTERPOLATORS[FEATURE_TYPE.COUNT] = {
   name: 'Greys',

@@ -108,7 +108,6 @@ function SideBar(props) {
     chartOptions,
     chartSize,
     classes,
-    datasetViews,
     embeddingData,
     globalFeatureSummary,
     interpolator,
@@ -117,7 +116,6 @@ function SideBar(props) {
     tab,
     unselectedPointSize,
     unselectedMarkerOpacity,
-    handleDialog,
     handleInterpolator,
     handleChartSize,
     handleChartOptions,
@@ -126,9 +124,6 @@ function SideBar(props) {
     handleUnselectedPointSize,
     handleMarkerOpacity,
     handleUnselectedMarkerOpacity,
-    handleOpenView,
-    handleDeleteView,
-    handleMessage,
   } = props;
 
   const primaryTrace =
@@ -213,16 +208,6 @@ function SideBar(props) {
     }
   }
 
-  function onLabelFontSize(event) {
-    setLabelFontSize(event.target.value);
-    onLabelFontSizeUpdateDebouncedFunc(event.target.value);
-  }
-
-  function onLabelStrokeWidth(event) {
-    setLabelStrokeWidth(event.target.value);
-    onLabelStrokeWidthUpdateDebouncedFunc(event.target.value);
-  }
-
   function onLabelStrokeWidthUpdate(value) {
     if (!isNaN(value) && value >= 0) {
       chartOptions.labelStrokeWidth = value;
@@ -301,34 +286,6 @@ function SideBar(props) {
     }
   }
 
-  function openView(id) {
-    handleOpenView(id);
-  }
-
-  function deleteView(id) {
-    setContextMenu(null);
-    handleDeleteView(id);
-  }
-
-  function viewDetails(event, id) {
-    event.stopPropagation();
-    setContextMenu(null);
-    ssetSelectedViewEl(event.currentTarget);
-    setSelectedView(find(datasetViews, (item) => item.id === id));
-  }
-
-  function copyView(id) {
-    let linkText =
-      window.location.protocol +
-      '//' +
-      window.location.host +
-      window.location.pathname;
-    linkText += '#q=' + encodeURIComponent(JSON.stringify({link: id}));
-    setContextMenu(null);
-    copyToClipboard(linkText);
-    handleMessage('Link copied');
-  }
-
   function onPointSizeChange(event) {
     handlePointSize(event.target.value);
   }
@@ -349,10 +306,6 @@ function SideBar(props) {
   function handleCloseViewDetails() {
     ssetSelectedViewEl(null);
     setSelectedView(null);
-  }
-
-  function onViewSaved() {
-    handleDialog(SAVE_DATASET_FILTER_DIALOG);
   }
 
   return (
@@ -549,7 +502,6 @@ const mapStateToProps = (state) => {
     chartSize: state.chartSize,
     chartOptions: state.chartOptions,
     dataset: state.dataset,
-    datasetViews: state.datasetViews,
     embeddingData: state.embeddingData,
     embeddings: state.embeddings,
     globalFeatureSummary: state.globalFeatureSummary,
@@ -564,9 +516,6 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleDialog: (value) => {
-      dispatch(setDialog(value));
-    },
     handleInterpolator: (value) => {
       dispatch(setInterpolator(value));
     },
@@ -590,15 +539,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     handleUnselectedMarkerOpacity: (value) => {
       dispatch(setUnselectedMarkerOpacity(value));
-    },
-    handleOpenView: (value) => {
-      dispatch(openLink(value));
-    },
-    handleDeleteView: (value) => {
-      dispatch(deleteLink(value));
-    },
-    handleMessage: (value) => {
-      dispatch(setMessage(value));
     },
   };
 };
