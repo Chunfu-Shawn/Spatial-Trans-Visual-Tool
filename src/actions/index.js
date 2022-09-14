@@ -167,7 +167,6 @@ export function init(dataset,geneId) {
     }
 
     window.setTimeout(loadingAppProgress, 500);
-    dispatch(_setLoadingApp({loading: false}));
     const task = {name: 'Load Dataset'};
     dispatch(addTask(task));
     if(dataset !== null){
@@ -181,6 +180,7 @@ export function init(dataset,geneId) {
         );
       }
     }
+    dispatch(_setLoadingApp({loading: false}));
     dispatch(removeTask(task))
     return Promise.resolve();
   };
@@ -918,7 +918,7 @@ function setDatasetViews(payload) {
   return {type: SET_DATASET_VIEWS, payload: payload};
 }
 
-export function setDataset(datasetInput, geneId, loadDefaultView = true, setLoading = true) {
+export function setDataset(datasetInput, geneId=null, loadDefaultView = true, setLoading = true) {
   return function (dispatch, getState) {
     // force re-render selected dataset dropdown
     let dataset = Object.assign({}, datasetInput);
@@ -943,7 +943,7 @@ export function setDataset(datasetInput, geneId, loadDefaultView = true, setLoad
       }
       dispatch(setDatasetViews(datasetViews));
       // dispatch(setDatasetFilters(datasetFilters));
-      if(geneId !== undefined) {
+      if(geneId !== null) {
           dispatch(loadGeneDefaultDatasetView(geneId));
       }else if (loadDefaultView) {
           dispatch(loadDefaultDatasetView());
