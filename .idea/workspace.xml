@@ -6,9 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="1daba91c-ff2d-42fb-b65c-b1eedb162a7c" name="变更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SideBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SideBar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SimplifiedEmbeddingChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimplifiedEmbeddingChart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SingleGeneExpression.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SingleGeneExpression.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SingleGeneExpressionModule.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SingleGeneExpressionModule.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/actions/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataset.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +80,8 @@
       <workItem from="1662557241894" duration="3288000" />
       <workItem from="1662628161299" duration="22079000" />
       <workItem from="1662724937304" duration="20268000" />
-      <workItem from="1662973508984" duration="40796000" />
+      <workItem from="1662973508984" duration="41217000" />
+      <workItem from="1663173958209" duration="1055000" />
     </task>
     <servers />
   </component>

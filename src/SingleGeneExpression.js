@@ -1,7 +1,4 @@
 import {IconButton, Snackbar} from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
 import LinearProgress from '@mui/material/LinearProgress';
 import * as React from 'react';
 import Box from '@mui/material/Box';
@@ -34,8 +31,7 @@ function SingleGeneExpression(props) {
         loadingApp,
         message,
         setMessage,
-        tab,
-        gene
+        tab
     } = props;
 
     function handleMessageClose() {

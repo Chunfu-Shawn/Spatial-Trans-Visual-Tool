@@ -35,7 +35,7 @@ export function SingleGeneExpressionModule(props) {
                  style={{
                      borderRadius: 5,
                      borderStyle: "solid",
-                     borderWidth: 1,
+                     borderWidth: 2,
                      borderColor: "lightgray",
                      // whether custom
                      width: setCustom ? width: 400,
