@@ -18,6 +18,7 @@ const antIcon = (
     <LoadingOutlined
         style={{
             fontSize: 24,
+            color:"lightblue"
         }}
         spin
     />

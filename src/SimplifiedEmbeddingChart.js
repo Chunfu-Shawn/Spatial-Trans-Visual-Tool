@@ -75,7 +75,14 @@ function SimplifiedEmbeddingChart(props) {
         handleChartOptions(chartOptionsTemp)
     },[])
     return (
-        <Box bgcolor={'transparent'} color="inherit" style={{position: 'relative'}}>
+        <div
+            style={{
+                background:"transparent",
+                color:"inherit",
+                position: 'relative',
+                height: primaryChartSize.height,
+                width: primaryChartSize.width
+        }}>
             {primaryTrace.type === 'scatter' &&
                 primaryTrace.embedding.mode == null && (
                     <SimplifiedScatterChartThree
@@ -111,7 +118,7 @@ function SimplifiedEmbeddingChart(props) {
                     handleClick={onDimensionFilterUpdated}
                 />
             )}
-        </Box>
+        </div>
     );
 }
 

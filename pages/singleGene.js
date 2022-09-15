@@ -22,7 +22,7 @@ export default function SingleGene() {
             <Link href={"/"}><a>Back to Home</a></Link>
             <div style={{height:"50vh"}}/>
             <h3>{gene} expression pattern</h3>
-            <div style={{display:"flex",flexFlow:"row wrap"}}>
+            <div style={{display:"flex",flexFlow:"row wrap",justifyContent: "space-between"}}>
                 <DynamicGeneExpress setCustom={true} width={400} height={400} dataset={dataset} gene={firstUpperCase(gene)}/>
                 <DynamicGeneExpress setCustom={true} width={400} height={400} dataset={dataset} gene={firstUpperCase('brca1')}/>
                 <DynamicGeneExpress setCustom={true} width={400} height={400} dataset={dataset} gene={firstUpperCase('id2')}/>
