@@ -34,6 +34,7 @@ function GalleryCharts(props) {
     unselectedPointSize,
     handleActiveFeature,
     handleEmbeddingData,
+    embeddingyRef
   } = props;
 
   const scatterPlotRef = useRef();
@@ -46,7 +47,7 @@ function GalleryCharts(props) {
       type: trace.featureType,
       embeddingKey: getTraceKey(trace),
     });
-    window.scrollTo(0, 0);
+    embeddingyRef.current.scrollIntoView()
   }
 
   function onSortEnd(galleryTraces, e) {

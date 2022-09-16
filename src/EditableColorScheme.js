@@ -84,13 +84,15 @@ export function EditableColorScheme(props) {
             {colorMax}
           </Typography>
         </div>
-        <InputLabel
-          disabled={domain == null}
-          shrink={true}
-          variant={'standard'}
-        >
-          Custom Color Range
-        </InputLabel>
+        {/*
+          <InputLabel
+              disabled={domain == null}
+              shrink={true}
+              variant={'standard'}
+          >
+            Custom Color Range
+          </InputLabel>
+        }
         <TextField
           InputLabelProps={{shrink: true}}
           style={{width: 90, marginRight: 4}}
@@ -111,6 +113,7 @@ export function EditableColorScheme(props) {
           label={'Max'}
           value={max}
         />
+        */}
       </>
       <Tooltip title={'Select to invert the color order'}>
         <div>

@@ -165,9 +165,7 @@ export function init(dataset,geneId) {
         }
       }
     }
-
     window.setTimeout(loadingAppProgress, 500);
-    dispatch(_setLoadingApp({loading: false}));
     const task = {name: 'Load Dataset'};
     dispatch(addTask(task));
     if(dataset !== null){
@@ -182,6 +180,7 @@ export function init(dataset,geneId) {
       }
     }
     dispatch(removeTask(task))
+    dispatch(_setLoadingApp({loading: false}));
     return Promise.resolve();
   };
 }

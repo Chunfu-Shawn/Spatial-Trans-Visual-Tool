@@ -158,12 +158,14 @@ function AppHeader(props) {
                   label="Distributions"
                   disabled={dataset == null || distributionData.length === 0}
                 />
-                <Tab
-                  data-testid="composition-tab"
-                  value="composition"
-                  label="Composition"
-                  disabled={dataset == null || obsCat.length < 2}
-                />
+                {dataset == null || obsCat.length < 2 ?
+                    <></> :
+                    <Tab
+                        data-testid="composition-tab"
+                        value="composition"
+                        label="Composition"
+                    />
+                }
               </Tabs>
             )}
             {

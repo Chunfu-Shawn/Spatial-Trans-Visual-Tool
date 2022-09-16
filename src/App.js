@@ -33,11 +33,23 @@ import SaveDatasetFilterDialog from './SaveDatasetViewDialog';
 import SaveSetDialog from './SaveSetDialog';
 import SideBar from './SideBar';
 import {withTheme} from '@emotion/react';
+import {Spin} from "antd";
+import {LoadingOutlined} from "@ant-design/icons";
 
 export const drawerWidth = 240;
+const antIcon = (
+    <LoadingOutlined
+        style={{
+            fontSize: 24,
+            color:"lightblue"
+        }}
+        spin
+    />
+);
 
 function App(props) {
   const galleryRef = useRef();
+  const embeddingyRef = useRef();
   const {
     drawerOpen,
     theme,
@@ -48,6 +60,7 @@ function App(props) {
     message,
     setMessage,
     tab,
+    chartSize
   } = props;
 
   function handleMessageClose() {
@@ -55,7 +68,7 @@ function App(props) {
   }
 
   function onGallery() {
-    window.scrollTo(0, galleryRef.current.offsetTop);
+    galleryRef.current.scrollIntoView();
   }
 
   // tabs: 1. embedding, 2. grouped table with kde per feature, dotplot
@@ -124,9 +137,9 @@ function App(props) {
           <>
             {dataset != null && (
               <div role="tabpanel" hidden={tab !== 'embedding'}>
-                {<EmbeddingChart onGallery={onGallery} />}
-                <DraggableDivider />
-                <div ref={galleryRef}>{<GalleryCharts />}</div>
+                  <div ref={embeddingyRef}><EmbeddingChart onGallery={onGallery} /></div>
+                  <div ref={galleryRef}><DraggableDivider /></div>
+                <GalleryCharts embeddingyRef={embeddingyRef}/>
               </div>
             )}
             {dataset != null && (
@@ -143,14 +156,29 @@ function App(props) {
         }
       </Box>
 
-      {loading && (
-        <Dialog aria-labelledby="loading-dialog-title" open={true}
-                container={() => document.getElementById('VisualTool')}>
-          <DialogTitle id="loading-dialog-title">
-            <CircularProgress size={20} /> Loading...
-          </DialogTitle>
-        </Dialog>
-      )}
+        {loading && (
+            <div style={{background:"#777777",width:chartSize.width,height:chartSize.height,zIndex:99999999}}>
+                <div style={{
+                    padding:5,
+                    color:"white",
+                    display:"flex",
+                    width:130,
+                    background:"#3a3a3a",
+                    position:"absolute",
+                    top:"50%",
+                    left:"50%",
+                    borderRadius: 4,
+                    borderStyle: "solid",
+                    borderWidth: 2,
+                    borderColor:"#3a3a3a",
+                    boxShadow: "2px 2px 5px 1px #212121",
+                    transform: "translate(-50%, -50%)"//将元素沿x轴反方向移动本元素的一半width,沿y轴反方向移动本元素的一半height
+                }}>
+                    <Spin indicator={antIcon} />
+                    <span style={{fontSize:18,marginLeft:10}}>Loading...</span>
+                </div>
+            </div>
+        )}
 
       {message != null && (
         <Snackbar
@@ -195,6 +223,7 @@ const mapStateToProps = (state) => {
     loadingApp: state.loadingApp,
     message: state.message,
     tab: state.tab,
+    chartSize: state.chartSize
   };
 };
 

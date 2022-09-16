@@ -4,26 +4,21 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Slider from '@mui/material/Slider';
-import TextField from '@mui/material/TextField';
 import {debounce, find} from 'lodash';
 import React, {useEffect, useMemo, useState} from 'react';
 import {
   getTraceKey,
   handleDomainChange,
-  SAVE_DATASET_FILTER_DIALOG,
   setChartOptions,
   setChartSize,
-  setDialog,
   setInterpolator,
   setMarkerOpacity,
-  setMessage,
   setPointSize,
   setUnselectedMarkerOpacity,
   setUnselectedPointSize,
 } from './actions';
 import {EditableColorScheme} from './EditableColorScheme';
 import {
-  copyToClipboard,
   REACT_MD_OVERRIDES,
   TRACE_TYPE_META_IMAGE,
 } from './util';
@@ -89,23 +84,14 @@ function SideBar(props) {
   const [unselectedOpacity, setUnselectedOpacity] = useState(
     props.unselectedMarkerOpacity
   );
-  const [labelFontSize, setLabelFontSize] = useState(
-    props.chartOptions.labelFontSize
-  );
-  const [labelStrokeWidth, setLabelStrokeWidth] = useState(
-    props.chartOptions.labelStrokeWidth
-  );
 
   const [minColor, setMinColor] = useState('');
   const [maxColor, setMaxColor] = useState('');
-  const [selectedViewEl, ssetSelectedViewEl] = useState(null);
+  const [selectedViewEl, setSelectedViewEl] = useState(null);
   const [selectedView, setSelectedView] = useState(null);
-  const [contextMenu, setContextMenu] = useState(null);
-  const [selectedLink, setSelectedLink] = useState(null);
 
   const {
     activeFeature,
-    chartOptions,
     chartSize,
     classes,
     embeddingData,
@@ -118,7 +104,6 @@ function SideBar(props) {
     unselectedMarkerOpacity,
     handleInterpolator,
     handleChartSize,
-    handleChartOptions,
     onDomain,
     handlePointSize,
     handleUnselectedPointSize,
@@ -135,14 +120,7 @@ function SideBar(props) {
         );
   const activeInterpolator =
     activeFeature == null ? null : interpolator[activeFeature.type];
-  const onLabelFontSizeUpdateDebouncedFunc = useMemo(
-    () => debounce(onLabelFontSizeUpdate, 500),
-    []
-  );
-  const onLabelStrokeWidthUpdateDebouncedFunc = useMemo(
-    () => debounce(onLabelStrokeWidthUpdate, 500),
-    []
-  );
+
   const updateMarkerOpacityDebouncedFunc = useMemo(
     () => debounce(updateMarkerOpacity, 500),
     []
@@ -152,12 +130,6 @@ function SideBar(props) {
     []
   );
 
-  useEffect(() => {
-    setLabelFontSize(chartOptions.labelFontSize);
-  }, [chartOptions.labelFontSize]);
-  useEffect(() => {
-    setLabelStrokeWidth(chartOptions.labelStrokeWidth);
-  }, [chartOptions.labelStrokeWidth]);
   useEffect(() => {
     setOpacity(markerOpacity);
   }, [markerOpacity]);
@@ -190,32 +162,6 @@ function SideBar(props) {
     }
   }, [activeFeature, embeddingData, globalFeatureSummary]);
 
-  function onLinkContextMenu(event, item) {
-    event.preventDefault();
-    event.stopPropagation();
-    setSelectedLink(item);
-    setContextMenu({
-      mouseX: event.clientX - 2,
-      mouseY: event.clientY - 4,
-    });
-  }
-
-  function onLabelFontSizeUpdate(value) {
-    if (!isNaN(value) && value > 0) {
-      chartOptions.labelFontSize = value;
-      handleChartOptions(chartOptions);
-      setLabelFontSize(value);
-    }
-  }
-
-  function onLabelStrokeWidthUpdate(value) {
-    if (!isNaN(value) && value >= 0) {
-      chartOptions.labelStrokeWidth = value;
-      handleChartOptions(chartOptions);
-      setLabelStrokeWidth(value);
-    }
-  }
-
   function onInterpolator(value) {
     handleInterpolator({featureType: activeFeature.type, value: value});
   }
@@ -229,6 +175,7 @@ function SideBar(props) {
   }
 
   function onMinChange(value) {
+    console.log(activeFeature)
     const summary = globalFeatureSummary[activeFeature.name];
     const trace = find(
       embeddingData,
@@ -298,13 +245,8 @@ function SideBar(props) {
     handleChartSize(event.target.value);
   }
 
-  function onShowGalleryLabelsChange(event) {
-    chartOptions.showGalleryLabels = event.target.checked;
-    handleChartOptions(chartOptions);
-  }
-
   function handleCloseViewDetails() {
-    ssetSelectedViewEl(null);
+    setSelectedViewEl(null);
     setSelectedView(null);
   }
 
@@ -434,18 +376,6 @@ function SideBar(props) {
           </Select>
         </FormControl>
 
-        <div>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={chartOptions.showGalleryLabels}
-                onChange={onShowGalleryLabelsChange}
-              />
-            }
-            label="Gallery Labels"
-          />
-        </div>
-
         <EditableColorScheme
           interpolator={activeInterpolator}
           domain={
@@ -463,33 +393,6 @@ function SideBar(props) {
           onMaxUIChange={onMaxUIChange}
           onInterpolator={onInterpolator}
         />
-
-        {/*
-          <FormControl className={classes.formControl}>
-            <TextField
-                value={labelFontSize}
-                onChange={onLabelFontSize}
-                size="small"
-                sx={{width: 130}}
-                InputLabelProps={{shrink: true}}
-                fullWidth
-                label="Label Font Size"
-            />
-          </FormControl>
-        }
-
-        <FormControl className={classes.formControl}>
-          <TextField
-            value={labelStrokeWidth}
-            onChange={onLabelStrokeWidth}
-            size="small"
-            sx={{width: 130}}
-            InputLabelProps={{shrink: true}}
-            fullWidth
-            label="Label Shadow Size"
-          />
-        </FormControl>
-        */}
       </div>
     </div>
   );

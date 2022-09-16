@@ -6,9 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="1daba91c-ff2d-42fb-b65c-b1eedb162a7c" name="变更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/singleGene.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/singleGene.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SimplifiedEmbeddingChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimplifiedEmbeddingChart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppHeader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EditableColorScheme.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/EditableColorScheme.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GalleryCharts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/GalleryCharts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SideBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SideBar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SingleGeneExpression.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SingleGeneExpression.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SingleGeneExpressionModule.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SingleGeneExpressionModule.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +47,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/chunfu/WebstormProjects/Spatial-Trans-Visual-Tool/src&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/chunfu/WebstormProjects/Spatial-Trans-Visual-Tool&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -80,7 +87,10 @@
       <workItem from="1662724937304" duration="20268000" />
       <workItem from="1662973508984" duration="41217000" />
       <workItem from="1663173958209" duration="1120000" />
-      <workItem from="1663175356754" duration="2574000" />
+      <workItem from="1663175356754" duration="3320000" />
+      <workItem from="1663214958775" duration="828000" />
+      <workItem from="1663231484000" duration="5323000" />
+      <workItem from="1663311707661" duration="4492000" />
     </task>
     <servers />
   </component>

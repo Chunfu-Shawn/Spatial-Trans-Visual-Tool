@@ -75,7 +75,7 @@ function SingleGeneExpression(props) {
             </Box>
 
             {loading && (
-                <div style={{background:"#797979",width:"100%",height:"100%"}}>
+                <div style={{background:"#c7c7c7",width:"100%",height:"100%"}}>
                     <div style={{
                         padding:5,
                         color:"white",
