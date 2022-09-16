@@ -6,15 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1daba91c-ff2d-42fb-b65c-b1eedb162a7c" name="变更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/singleGene.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/singleGene.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppHeader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EditableColorScheme.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/EditableColorScheme.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GalleryCharts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/GalleryCharts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SideBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SideBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SingleGeneExpression.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SingleGeneExpression.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SingleGeneExpressionModule.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SingleGeneExpressionModule.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NoAuth.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/actions/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -90,7 +82,7 @@
       <workItem from="1663175356754" duration="3320000" />
       <workItem from="1663214958775" duration="828000" />
       <workItem from="1663231484000" duration="5323000" />
-      <workItem from="1663311707661" duration="4492000" />
+      <workItem from="1663311707661" duration="5056000" />
     </task>
     <servers />
   </component>

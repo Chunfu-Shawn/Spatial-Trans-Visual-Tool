@@ -135,7 +135,6 @@ export const SET_LOADING_APP = 'LOADING_APP';
 
 export const SET_JOB_RESULTS = 'SET_JOB_RESULTS';
 export const SET_JOB_RESULT = 'SET_JOB_RESULT';
-//let auth = new NoAuth();
 
 export function getEmbeddingKey(embedding, includeDensity = true) {
   let key = embedding.name;

@@ -49,9 +49,14 @@ function SimplifiedEmbeddingChart(props) {
         unselectedMarkerOpacity,
         unselectedPointSize,
         handleChartOptions,
-        handleInterpolator,
-        interpolator
     } = props;
+
+    useEffect(()=>{
+        let chartOptionsTemp = {...chartOptions}
+        // set darkMode = false
+        chartOptionsTemp.darkMode=false
+        handleChartOptions(chartOptionsTemp)
+    },[handleChartOptions,chartOptions.darkMode])
 
     if (activeFeature == null) {
         return null;
@@ -68,12 +73,6 @@ function SimplifiedEmbeddingChart(props) {
         searchTokens,
         embeddingLabels
     );
-    useEffect(()=>{
-        let chartOptionsTemp = {...chartOptions}
-        // set darkMode = false
-        chartOptionsTemp.darkMode=false
-        handleChartOptions(chartOptionsTemp)
-    },[])
     return (
         <div
             style={{
@@ -142,7 +141,6 @@ const mapStateToProps = (state) => {
         shape: state.dataset.shape,
         unselectedMarkerOpacity: state.unselectedMarkerOpacity,
         unselectedPointSize: state.unselectedPointSize,
-        interpolator: state.interpolator,
     };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -176,10 +174,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         handleChartOptions: (value) => {
             dispatch(setChartOptions(value));
-        },
-        handleInterpolator: (value) => {
-            dispatch(setInterpolator(value));
-        },
+        }
     };
 };
 

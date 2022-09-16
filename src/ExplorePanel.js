@@ -307,10 +307,6 @@ function ExplorePanel(props) {
     event.stopPropagation();
   }
 
-  function onSaveFeatureList() {
-    handleDialog(SAVE_FEATURE_SET_DIALOG);
-  }
-
   function onEmbeddingsChange(event, value) {
     const newValue = [];
     const embeddingKeys = dataset.embeddings.map((item) =>
@@ -323,10 +319,6 @@ function ExplorePanel(props) {
       newValue.push(embedding);
     });
     handleEmbeddings(newValue);
-  }
-
-  function onLayersChange(event, value) {
-    handleLayers(value);
   }
 
   function onFeatureSetClick(event, option) {

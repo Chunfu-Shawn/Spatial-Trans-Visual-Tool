@@ -490,7 +490,7 @@ class DistributionGroup extends React.PureComponent {
               <MenuItem value={'width'}>Width</MenuItem>
             </Select>
             <FormHelperText>
-              If "area", violins have the same area. If "width", violins have
+              If `&quot;`area`&quot;`, violins have the same area. If `&quot;`width`&quot;`, violins have
               the same maximum width.
             </FormHelperText>
           </FormControl>

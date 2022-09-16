@@ -115,6 +115,7 @@ const OuterElementType = React.forwardRef((props, ref) => {
   const outerProps = React.useContext(OuterElementContext);
   return <div ref={ref} {...props} {...outerProps} />;
 });
+OuterElementType.displayName = "OuterElementType"
 
 function useResetCache(data) {
   const ref = React.useRef(null);

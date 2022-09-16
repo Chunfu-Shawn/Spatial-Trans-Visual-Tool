@@ -28,7 +28,6 @@ import Divider from '@mui/material/Divider';
 import ExplorePanel from './ExplorePanel';
 import Popover from '@mui/material/Popover';
 import ReactMarkdown from 'markdown-to-jsx';
-import Menu from '@mui/material/Menu';
 
 const pointSizeOptions = [
   {value: 0.1, label: '10%'},
@@ -253,37 +252,6 @@ function SideBar(props) {
   return (
     <div className={classes.root} style={{padding:6}}>
       <ExplorePanel />
-      {selectedView && (
-        <Popover
-          id={'view-details'}
-          open={Boolean(selectedViewEl)}
-          anchorEl={selectedViewEl}
-          onClose={handleCloseViewDetails}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}
-        >
-          <div style={{width: 500}}>
-            {selectedView.last_updated && (
-              <Typography>
-                Last Updated:{' '}
-                {new Date(selectedView.last_updated).toDateString()}
-              </Typography>
-            )}
-            {selectedView.notes && (
-              <ReactMarkdown
-                options={{overrides: REACT_MD_OVERRIDES}}
-                children={selectedView.notes}
-              />
-            )}
-          </div>
-        </Popover>
-      )}
       <div style={tab === 'embedding' ? null : {display: 'none'}}>
         <Divider />
         <Typography
