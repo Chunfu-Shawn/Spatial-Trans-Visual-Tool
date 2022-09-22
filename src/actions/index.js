@@ -29,7 +29,7 @@ import {
   updateTraceColors,
 } from '../util';
 
-export const DEFAULT_POINT_SIZE = 1;
+export const DEFAULT_POINT_SIZE = 1 * screen.width/1440;
 export const DEFAULT_MARKER_OPACITY = 1;
 export const DEFAULT_UNSELECTED_MARKER_OPACITY = 0.1;
 export const DEFAULT_INTERPOLATORS = {};
@@ -111,14 +111,8 @@ export const SET_DATASET = 'SET_DATASET';
 export const SET_MARKERS = 'SET_MARKERS';
 export const SET_DIALOG = 'SET_DIALOG';
 
-export const OPEN_DATASET_DIALOG = 'OPEN_DATASET_DIALOG';
-export const EDIT_DATASET_DIALOG = 'EDIT_DATASET_DIALOG';
-export const SAVE_DATASET_FILTER_DIALOG = 'SAVE_DATASET_FILTER_DIALOG';
 export const SAVE_FEATURE_SET_DIALOG = 'SAVE_FEATURE_SET_DIALOG';
 export const HELP_DIALOG = 'HELP_DIALOG';
-export const DELETE_DATASET_DIALOG = 'DELETE_DATASET_DIALOG';
-
-export const SET_DATASET_CHOICES = 'SET_DATASET_CHOICES';
 
 export const SET_DISTRIBUTION_DATA = 'SET_DISTRIBUTION_DATA';
 export const SET_SELECTED_DISTRIBUTION_DATA = 'SET_SELECTED_DISTRIBUTION_DATA';
@@ -132,9 +126,8 @@ export const REMOVE_TASK = 'REMOVE_TASK';
 export const SET_TAB = 'SET_TAB';
 
 export const SET_LOADING_APP = 'LOADING_APP';
-
-export const SET_JOB_RESULTS = 'SET_JOB_RESULTS';
-export const SET_JOB_RESULT = 'SET_JOB_RESULT';
+export const RESTORE_VIEW = 'RESTORE_VIEW';
+export const SET_SAVED_DATASET_STATE = 'SET_SAVED_DATASET_STATE';
 
 export function getEmbeddingKey(embedding, includeDensity = true) {
   let key = embedding.name;

@@ -59,7 +59,7 @@ export function VisualTool(props) {
                  borderWidth: 1,
                  borderColor: "lightgray",
                  // whether custom
-                 width: setCustom ? width: "100vw",
+                 width: setCustom ? width+20: "100vw",
                  maxHeight: setCustom ? height: "100vh",
                  minHeight: 500,
                  overflow: setCustom ? "scroll" : "visible",

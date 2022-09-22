@@ -11,17 +11,13 @@ import Toolbar from '@mui/material/Toolbar';
 import CloseIcon from '@mui/icons-material/Close';
 import {connect} from 'react-redux';
 import {
-  DELETE_DATASET_DIALOG,
   HELP_DIALOG,
-  SAVE_DATASET_FILTER_DIALOG,
-  SAVE_FEATURE_SET_DIALOG,
   setDialog,
   setDrawerOpen,
   setMessage,
 } from './actions';
 import AppHeader from './AppHeader';
 import CompositionPlots from './CompositionPlots';
-import DeleteDatasetDialog from './DeleteDatasetDialog';
 import DistributionPlots from './DistributionPlots';
 import DraggableDivider from './DraggableDivider';
 import EmbeddingChart from './EmbeddingChart';
@@ -29,8 +25,6 @@ import GalleryCharts from './GalleryCharts';
 import HelpDialog from './HelpDialog';
 
 import LandingPage from './LandingPage';
-import SaveDatasetFilterDialog from './SaveDatasetViewDialog';
-import SaveSetDialog from './SaveSetDialog';
 import SideBar from './SideBar';
 import {withTheme} from '@emotion/react';
 import {Spin} from "antd";
@@ -78,10 +72,7 @@ function App(props) {
   const footerBackground = theme.palette.background.paper;
   return (
     <Box sx={{display: 'flex', backgroundColor: footerBackground}}>
-      {dialog === DELETE_DATASET_DIALOG && <DeleteDatasetDialog />}
-      {dialog === SAVE_DATASET_FILTER_DIALOG && <SaveDatasetFilterDialog />}
       {dialog === HELP_DIALOG && <HelpDialog />}
-      {dialog === SAVE_FEATURE_SET_DIALOG && <SaveSetDialog />}
       <AppHeader />
       <Drawer
         open={drawerOpen && dataset != null}

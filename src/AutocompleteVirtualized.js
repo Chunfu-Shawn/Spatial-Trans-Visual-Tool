@@ -302,12 +302,12 @@ export default function AutocompleteVirtualized(props) {
   }
   let getChipIcon = props.getChipIcon;
   if (getChipIcon == null) {
-    getChipIcon = (option) => null;
+    getChipIcon = function getChipIcon(option) { return null };
   }
 
   let getChipTitle = props.getChipTitle;
   if (getChipTitle == null) {
-    getChipTitle = (option) => null;
+    getChipTitle = function getChipTitle(option) { return null }
   }
   let getOptionLabel = props.getOptionLabel;
   if (getOptionLabel == null) {
