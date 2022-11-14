@@ -30,7 +30,7 @@ import {withTheme} from '@emotion/react';
 import {Spin} from "antd";
 import {LoadingOutlined} from "@ant-design/icons";
 
-export const drawerWidth = 240;
+export const drawerWidth = 200;
 const antIcon = (
     <LoadingOutlined
         style={{
@@ -89,7 +89,7 @@ function App(props) {
       >
         <Toolbar />
         {dataset != null && (
-          <SideBar key={dataset.id} />
+          <SideBar key={dataset.id} drawerWidth={drawerWidth} />
         )}
       </Drawer>
       <Box

@@ -34,7 +34,7 @@ function stripInterpolate(name) {
 }
 
 function ColorSchemeSelector(props) {
-  const {classes, interpolator, handleInterpolator, width} = props;
+  const {classes, interpolator, handleInterpolator, width,drawerWidth} = props;
 
   function onInterpolatorChange(event) {
     let name = event.target.value;
@@ -61,7 +61,7 @@ function ColorSchemeSelector(props) {
     interpolator == null
       ? 'interpolateViridis'
       : fixInterpolatorName(interpolator.name);
-  const _width = width || 176;
+  const _width = drawerWidth-50 || 176;
   const height = 14;
   return (
     <>

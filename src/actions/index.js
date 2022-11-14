@@ -29,7 +29,7 @@ import {
   updateTraceColors,
 } from '../util';
 
-export const DEFAULT_POINT_SIZE = 1 * screen.width/1440;
+export const DEFAULT_POINT_SIZE = 1 * 1440/screen.width;
 export const DEFAULT_MARKER_OPACITY = 1;
 export const DEFAULT_UNSELECTED_MARKER_OPACITY = 0.1;
 export const DEFAULT_INTERPOLATORS = {};

@@ -28,6 +28,7 @@ import Divider from '@mui/material/Divider';
 import ExplorePanel from './ExplorePanel';
 import Popover from '@mui/material/Popover';
 import ReactMarkdown from 'markdown-to-jsx';
+import {drawerWidth} from "./App";
 
 const pointSizeOptions = [
   {value: 0.1, label: '10%'},
@@ -93,6 +94,7 @@ function SideBar(props) {
     activeFeature,
     chartSize,
     classes,
+    drawerWidth,
     embeddingData,
     globalFeatureSummary,
     interpolator,
@@ -266,7 +268,7 @@ function SideBar(props) {
           min={0.0}
           max={1}
           step={0.01}
-          sx={{width: 190, marginLeft: 1}}
+          sx={{width: drawerWidth-50, marginLeft: 1}}
           valueLabelDisplay="auto"
           value={opacity}
           onChange={onMarkerOpacityChange}
@@ -278,19 +280,19 @@ function SideBar(props) {
           min={0.0}
           max={1}
           step={0.01}
-          sx={{width: 190, marginLeft: 1}}
+          sx={{width: drawerWidth-50, marginLeft: 1}}
           valueLabelDisplay="auto"
           value={unselectedOpacity}
           onChange={onUnselectedMarkerOpacityChange}
           aria-labelledby="continuous-slider"
         />
 
-        <FormControl className={classes.formControl}>
+        <FormControl className={classes.formControl} >
           <InputLabel htmlFor="point_size">Marker Size</InputLabel>
           <Select
             label={'Marker Size'}
             labelId={'point_size'}
-            className={classes.select}
+            sx={{width: drawerWidth-50}}
             size={'small'}
             onChange={onPointSizeChange}
             value={pointSize}
@@ -312,7 +314,7 @@ function SideBar(props) {
             label={'Filtered Marker Size'}
             labelId={'filtered_point_size'}
             size={'small'}
-            className={classes.select}
+            sx={{width: drawerWidth-50}}
             onChange={onUnselectedPointSizeChange}
             value={unselectedPointSize}
             multiple={false}
@@ -331,7 +333,7 @@ function SideBar(props) {
             label={'Gallery Chart Size'}
             labelId={'chart_size'}
             size={'small'}
-            className={classes.select}
+            sx={{width: drawerWidth-50}}
             onChange={onChartSizeChange}
             value={chartSize}
             multiple={false}
@@ -353,6 +355,7 @@ function SideBar(props) {
               ? primaryTrace.colorScale.domain()
               : null
           }
+          drawerWidth={drawerWidth}
           min={minColor}
           max={maxColor}
           onMinChange={onMinChange}

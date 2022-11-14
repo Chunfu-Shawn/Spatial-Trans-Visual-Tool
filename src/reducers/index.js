@@ -121,7 +121,7 @@ function chartSize(state = 300, action) {
 function panel(
   state = {
     dividerDelta: 0,
-    drawerOpen: true,
+    drawerOpen: false,
     primaryChartSize: DEFAULT_PRIMARY_CHART_SIZE,
   },
   action
@@ -144,7 +144,7 @@ function panel(
         }else {
           const windowWidth = window.innerWidth;
           const windowHeight = window.innerHeight;
-          const width = windowWidth - (drawerOpen ? 280 : 40);
+          const width = windowWidth - (drawerOpen ? 200 : 40);
           const height = Math.max(300, windowHeight - 370);
           primaryChartSize = {width: width, height: height, setCustom: false};
         }

@@ -20,6 +20,7 @@ export function EditableColorScheme(props) {
     onInterpolator,
     min,
     max,
+    drawerWidth,
   } = props;
 
   function updateMin(value) {
@@ -76,9 +77,10 @@ export function EditableColorScheme(props) {
       <ColorSchemeSelector
         handleInterpolator={onInterpolator}
         interpolator={interpolator}
+        drawerWidth={drawerWidth}
       />
       <>
-        <div style={{color: textColor, width: width}}>
+        <div style={{color: textColor, width: drawerWidth-50}}>
           <Typography variant={'caption'}>{colorMin}</Typography>
           <Typography variant={'caption'} style={{float: 'right'}}>
             {colorMax}
