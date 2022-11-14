@@ -24,7 +24,7 @@ export default function HomePage() {
             <div style={{margin:50}}>
                 <DynamicVisualTool setCustom={true} drawerOpen={false}
                                    width={1200} height={1000}
-                                   dataset={dataset}/>
+                                   chartSize={220} dataset={dataset}/>
             </div>
         </div>
     )

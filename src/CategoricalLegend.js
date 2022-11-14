@@ -255,7 +255,7 @@ export default function CategoricalLegend(props) {
             <div data-testid="categorical-legend">
                 <FixedSizeList
                     height={height}
-                    width={180}
+                    width={150}
                     itemSize={40}
                     itemCount={categories.length}
                     ref={listRef}

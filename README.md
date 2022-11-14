@@ -57,13 +57,17 @@ dataset = {
 ```
 
 ### Module Size
-| Attributions | Type      | Default | Description                   |
-|--------------|-----------|---------|-------------------------------|
-| setCustom    | true/false | false   | custom size or adaptive size  |
-| width        | "number"  | 1100    | the width of this module      |
-| height       | "number" | 800     | the max height of this module |
+| Attributions | Type      | Default | Description                                 |
+|--------------|-----------|---------|---------------------------------------------|
+| setCustom    | true/false | false   | custom size or adaptive size                |
+| drawerOpen       | true/false | true    | whether to open SideBar in default          |
+| width        | "number"  | 1100    | the width of this module                    |
+| height       | "number" | 800     | the max height of this module               |
+| chartSize       | "number" | 300     | the height and width of this gallary images |
 
 Example:
 ```javascript
-<VisualTool setCustom={true} width={1200} dataset={dataset}/>
+<VisualTool setCustom={true} drawerOpen={false}
+            width={1200} height={1000}
+            chartSize={220} dataset={dataset}/>
 ```

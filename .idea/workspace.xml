@@ -5,18 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1daba91c-ff2d-42fb-b65c-b1eedb162a7c" name="变更" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/dataset.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/dataset.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ColorSchemeSelector.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ColorSchemeSelector.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EditableColorScheme.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/EditableColorScheme.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SideBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SideBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CategoricalLegend.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/CategoricalLegend.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/VisualTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/VisualTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dataset.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataset.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +93,7 @@
       <workItem from="1665929242828" duration="971000" />
       <workItem from="1665975769963" duration="511000" />
       <workItem from="1665983024032" duration="673000" />
-      <workItem from="1668419086814" duration="4176000" />
+      <workItem from="1668419086814" duration="6422000" />
     </task>
     <servers />
   </component>
