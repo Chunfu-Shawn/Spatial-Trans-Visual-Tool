@@ -1,4 +1,3 @@
-import Box from '@mui/material/Box';
 import {find} from 'lodash';
 import React, {useEffect} from 'react';
 
@@ -15,10 +14,10 @@ import {
     setLegendScrollPosition,
     setWindowSize,
 } from './actions';
-import ImageChart from './ImageChart';
 import SimplifiedScatterChartThree from './SimplifiedScatterChartThree.js';
 import {FEATURE_TYPE, getInterpolator} from './util';
 import memoize from 'memoize-one';
+import SimplifiedImageChart from "./SimplifiedImageChart";
 
 const getActiveEmbeddingLabels = memoize((searchTokens, embeddingLabels) => {
     return searchTokens
@@ -100,7 +99,7 @@ function SimplifiedEmbeddingChart(props) {
                     />
                 )}
             {primaryTrace.type === 'image' && (
-                <ImageChart
+                <SimplifiedImageChart
                     cachedData={cachedData}
                     obsCat={activeEmbeddingLabels}
                     setChartOptions={onChartOptions}

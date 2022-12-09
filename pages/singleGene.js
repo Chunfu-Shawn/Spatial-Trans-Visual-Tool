@@ -6,9 +6,9 @@ import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 
 const dataset2 = {
-    "id": "GSM5833739",
-    "name": "GSM5833739",
-    "url": "https://rhesusbase.com:9999/datasets/GSM5833739_10x_Visium_deal/GSM5833739_10x_Visium_deal.jsonl"
+    "id": "STW-H-Uterus-Visium-1",
+    "name": "STW-H-Uterus-Visium-1",
+    "url": "https://rhesusbase.com:9999/jsonl_files/STW-H-Uterus-Visium-1/EarlySecretory_152807/EarlySecretory_152807.jsonl"
 }
 
 function firstUpperCase(str) {
@@ -48,8 +48,7 @@ export default function SingleGene() {
             <h3>{gene} expression pattern</h3>
             <div style={{display:"flex",flexFlow:"row wrap",justifyContent: "space-between"}}>
                 <DynamicGeneExpress setCustom={true} width={400} height={400} dataset={dataset} gene={firstUpperCase(gene)}/>
-                <DynamicGeneExpress setCustom={true} width={400} height={400} dataset={dataset} gene={firstUpperCase('brca1')}/>
-                <DynamicGeneExpress setCustom={true} width={400} height={400} dataset={dataset} gene={firstUpperCase('id2')}/>
+                <DynamicGeneExpress setCustom={true} width={400} height={400} dataset={dataset2} gene={'BRCA1'}/>
             </div>
         </div>
     )

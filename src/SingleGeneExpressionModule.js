@@ -9,7 +9,6 @@ import SingleGeneExpressionWrapper from "./SingleGeneExpressionWrapper";
 
 export class SingleGeneExpressionModule extends PureComponent {
     render() {
-
         const {
             width = 400,
             height = 400,

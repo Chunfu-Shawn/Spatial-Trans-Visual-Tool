@@ -284,16 +284,17 @@ export default function ChartToolbar(props) {
         </Tooltip>
       )}
 
-      <Tooltip title={'Scroll To Gallery'}>
+      {props.toGallary===true && <Tooltip title={'Scroll To Gallery'}>
         <IconButton
-          edge={false}
-          size={'small'}
-          aria-label="Scroll To Gallery"
-          onClick={onGallery}
+            edge={false}
+            size={'small'}
+            aria-label="Scroll To Gallery"
+            onClick={onGallery}
         >
-          <PhotoLibraryIcon />
+          <PhotoLibraryIcon/>
         </IconButton>
       </Tooltip>
+      }
       {/*<Tooltip title={"Copy Image"}>*/}
       {/*    <IconButton edge={false} size={'small'} aria-label="Copy Image" onClick={props.onCopyImage}>*/}
       {/*        <FileCopyIcon/>*/}
