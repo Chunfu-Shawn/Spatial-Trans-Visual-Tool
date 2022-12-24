@@ -124,20 +124,6 @@ function AppHeader(props) {
             {hasSelection && shape != null && intFormat(selection.size) + ' / '}
             {shape != null && intFormat(shape[0]) + ' spots'}
           </Typography>
-          {dataset && (
-            <IconButton
-              aria-label="Info"
-              onClick={onShowDatasetDetails}
-              aria-owns={datasetDetailsOpen ? 'dataset-details' : undefined}
-              aria-haspopup="true"
-              size="small"
-            >
-              <InfoOutlinedIcon />
-            </IconButton>
-          )}
-          <Typography variant="subtitle2">
-            {dataset != null ? dataset.name : ''}
-          </Typography>
           <div style={{display: 'flex', marginLeft: 'auto'}}>
             {!loadingApp.loading && (
               <Tabs

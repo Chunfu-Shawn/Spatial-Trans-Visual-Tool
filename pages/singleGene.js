@@ -22,7 +22,7 @@ const DynamicGeneExpress = dynamic(() =>
     })
 
 export default function SingleGene() {
-    const [gene,setGene] = useState('gap43')
+    const [gene,setGene] = useState('Gap43')
     // after ssr and document build
     const [state, setState] = useState(false);
 
@@ -37,17 +37,9 @@ export default function SingleGene() {
         <div style={{margin:50}}>
             <h3 >Welcome to Spatial-Transcriptome-Visual-Tool!</h3>
             <Link href={"/"}><a>Back to Home</a></Link>
-            <Button onClick={toggleDrawer(true)}>{"right"}</Button>
-            <Drawer
-                anchor={"right"}
-                open={state}
-                onClose={toggleDrawer(false)}
-            >
-                <DynamicGeneExpress setCustom={true} width={400} height={400} dataset={dataset} gene={firstUpperCase(gene)}/>
-            </Drawer>
             <h3>{gene} expression pattern</h3>
             <div style={{display:"flex",flexFlow:"row wrap",justifyContent: "space-between"}}>
-                <DynamicGeneExpress setCustom={true} width={400} height={400} dataset={dataset} gene={firstUpperCase(gene)}/>
+                <DynamicGeneExpress setCustom={true} width={400} height={400} dataset={dataset} gene={gene}/>
                 <DynamicGeneExpress setCustom={true} width={400} height={400} dataset={dataset2} gene={'BRCA1'}/>
             </div>
         </div>

@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1daba91c-ff2d-42fb-b65c-b1eedb162a7c" name="变更" comment="">
-      <change afterPath="$PROJECT_DIR$/pages/cellType.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/SimplifiedImageChart.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/singleGene.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/singleGene.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ChartToolbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChartToolbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SimplifiedEmbeddingChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimplifiedEmbeddingChart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SimplifiedScatterChartThree.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimplifiedScatterChartThree.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SingleGeneExpressionModule.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SingleGeneExpressionModule.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppHeader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DirectAccessDataset.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/DirectAccessDataset.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,21 +36,21 @@
     <option name="showMembers" value="true" />
     <option name="sortByType" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/chunfu/WebstormProjects/Spatial-Trans-Visual-Tool/src",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "ts.external.directory.path": "/Users/chunfu/WebstormProjects/Spatial-Trans-Visual-Tool/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/chunfu/WebstormProjects/Spatial-Trans-Visual-Tool&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/chunfu/WebstormProjects/Spatial-Trans-Visual-Tool/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
@@ -100,7 +97,9 @@
       <workItem from="1669273264321" duration="7179000" />
       <workItem from="1669438978510" duration="356000" />
       <workItem from="1669612593567" duration="422000" />
-      <workItem from="1670500078669" duration="2270000" />
+      <workItem from="1670500078669" duration="2637000" />
+      <workItem from="1670662581207" duration="4693000" />
+      <workItem from="1671867454106" duration="296000" />
     </task>
     <servers />
   </component>

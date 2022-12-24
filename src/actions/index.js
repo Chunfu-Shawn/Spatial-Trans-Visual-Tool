@@ -950,7 +950,6 @@ export function setDataset(datasetInput, geneId=null, loadDefaultView = true, se
 
     const initPromise = dataset.api.init(dataset.id, dataset.url);
     const promises = [initPromise];
-
     const schemaPromise = dataset.api.getSchemaPromise().then((result) => {
       newDataset = result;
     })

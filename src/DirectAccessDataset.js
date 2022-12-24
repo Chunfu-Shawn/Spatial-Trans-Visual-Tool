@@ -15,6 +15,7 @@ export class DirectAccessDataset {
     this.key2data = {};
     this.format = 'json';
     this.schema = null;
+    this.gene = null;
     if (url.endsWith('.jsonl') || url.endsWith('.jsonl.gz')) {
       this.format = 'jsonl';
     }
@@ -31,6 +32,7 @@ export class DirectAccessDataset {
   }
 
   getByteRange(key) {
+    console.log(this.key2bytes[key])
     let range = this.key2bytes[key];
     if (!range) {
       throw new Error(key + ' not found');
@@ -220,29 +222,29 @@ export class DirectAccessDataset {
     if (this.format === 'jsonl') {
       return new Promise((resolve, reject) => {
         fetch(url + '.idx.json')
-          .then((r) => r.json())
-          .then((result) => {
-            _this.key2bytes = result.index;
-          })
-          .then(() => {
-            fetch(url, _this.getByteRange('schema'))
-              .then((response) => {
-                return response.json();
-              })
-              .then((result) => {
-                _this.schema = result['schema'];
-                resolve(_this.schema);
-              });
-          });
+            .then((r) => r.json())
+            .then((result) => {
+              _this.key2bytes = result.index;
+            })
+            .then(() => {
+              fetch(url, _this.getByteRange('schema'))
+                  .then((response) => {
+                    return response.json();
+                  })
+                  .then((result) => {
+                    _this.schema = result['schema'];
+                    resolve(_this.schema);
+                  });
+            });
       });
     } else {
       return new Promise((resolve, reject) => {
         fetch(url)
-          .then((r) => r.json())
-          .then((result) => {
-            _this.schema = result;
-            resolve(result);
-          });
+            .then((r) => r.json())
+            .then((result) => {
+              _this.schema = result;
+              resolve(result);
+            });
       });
     }
   }
